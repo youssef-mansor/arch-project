@@ -1,0 +1,10 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../Single Cycle Implementation of RISC-V.srcs/sources_1/new/DFlipFlop.v" \
+"../../../../Single Cycle Implementation of RISC-V.srcs/sim_1/new/DFlipFlop_tb.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort
