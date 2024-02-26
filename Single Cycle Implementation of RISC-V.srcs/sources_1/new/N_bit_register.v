@@ -23,6 +23,12 @@
 //                  input D, 
 //                  output reg Q);
 
+//module MUX(
+//    input a,//input 0
+//    input b,//input 1
+//    input s,//selection
+//    output o //output
+//    );
 module N_bit_register #(parameter N = 8)(
     input load,
     input clk,
@@ -37,7 +43,8 @@ module N_bit_register #(parameter N = 8)(
     generate
         for(i = 0; i < N; i = i + 1) begin
             wire a;
-            assign a = (load)?D[i] :Q[i];
+            //assign a = (load)?D[i] :Q[i];
+            MUX mx(.a(D[i]), .b(Q[i]), .s(load), .o(a));
             DFlipFlop DFF(.clk(clk), .rst(rst), .D(a), .Q(Q[i]));
         end
     endgenerate

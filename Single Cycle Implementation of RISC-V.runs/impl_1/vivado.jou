@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Tue Feb 20 10:24:55 2024
+# Process ID: 11720
+# Current directory: D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.runs/impl_1
+# Command line: vivado.exe -log n_bit_2_x_1_MUX.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source n_bit_2_x_1_MUX.tcl -notrace
+# Log file: D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.runs/impl_1/n_bit_2_x_1_MUX.vdi
+# Journal file: D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.runs/impl_1\vivado.jou
+#-----------------------------------------------------------
+source n_bit_2_x_1_MUX.tcl -notrace

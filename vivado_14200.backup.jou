@@ -1,0 +1,192 @@
+#-----------------------------------------------------------
+# Vivado v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Tue Feb 20 09:14:45 2024
+# Process ID: 14200
+# Current directory: D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent9772 D:\Auc_Crs\Sprng24\Arch_lab\Single Cycle Implementation of RISC-V\Single Cycle Implementation of RISC-V.xpr
+# Log file: D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/vivado.log
+# Journal file: D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project {D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.xpr}
+update_compile_order -fileset sources_1
+launch_simulation
+source DFlipFlop_tb.tcl
+close_sim
+launch_simulation
+source DFlipFlop_tb.tcl
+close [ open {D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sources_1/new/N-bit-register.v} w ]
+add_files {{D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sources_1/new/N-bit-register.v}}
+update_compile_order -fileset sources_1
+export_ip_user_files -of_objects  [get_files {{D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sources_1/new/N-bit-register.v}}] -no_script -reset -force -quiet
+remove_files  {{D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sources_1/new/N-bit-register.v}}
+file delete -force {D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sources_1/new/N-bit-register.v}
+close [ open {D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sources_1/new/N_bit_register.v} w ]
+add_files {{D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sources_1/new/N_bit_register.v}}
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+close [ open {D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sim_1/new/N_bit_register_tb.v} w ]
+add_files -fileset sim_1 {{D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sim_1/new/N_bit_register_tb.v}}
+update_compile_order -fileset sim_1
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top N_bit_register_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sim_1
+launch_simulation
+source N_bit_register_tb.tcl
+close_sim
+launch_simulation
+source N_bit_register_tb.tcl
+close_sim
+launch_simulation
+source N_bit_register_tb.tcl
+close [ open {D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sources_1/new/MUX.v} w ]
+add_files {{D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sources_1/new/MUX.v}}
+update_compile_order -fileset sources_1
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+close [ open {D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sim_1/new/MUX_tb.v} w ]
+add_files -fileset sim_1 {{D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sim_1/new/MUX_tb.v}}
+update_compile_order -fileset sim_1
+close_sim
+launch_simulation
+source N_bit_register_tb.tcl
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top MUX [current_fileset]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sources_1
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top MUX_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sim_1
+launch_simulation
+launch_simulation
+launch_simulation
+source MUX_tb.tcl
+close_sim
+launch_simulation
+source MUX_tb.tcl
+close [ open {D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sources_1/new/n_bit_2_x_1_MUX.v} w ]
+add_files {{D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sources_1/new/n_bit_2_x_1_MUX.v}}
+update_compile_order -fileset sources_1
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+close [ open {D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sim_1/new/n_bit_2_x_1_MUX_tb.v} w ]
+add_files -fileset sim_1 {{D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sim_1/new/n_bit_2_x_1_MUX_tb.v}}
+update_compile_order -fileset sim_1
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top n_bit_2_x_1_MUX [current_fileset]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sources_1
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top n_bit_2_x_1_MUX_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sim_1
+launch_simulation
+launch_simulation
+launch_simulation
+source n_bit_2_x_1_MUX_tb.tcl
+close_sim
+launch_simulation
+source n_bit_2_x_1_MUX_tb.tcl
+launch_runs impl_1 -jobs 4
+wait_on_run impl_1
+open_run impl_1
+close_design
+open_run synth_1 -name synth_1
+close [ open {D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sources_1/new/n_bit_shift_left.v} w ]
+add_files {{D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sources_1/new/n_bit_shift_left.v}}
+update_compile_order -fileset sources_1
+close [ open {D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sources_1/new/N_bit_shift_register.v} w ]
+add_files {{D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sources_1/new/N_bit_shift_register.v}}
+update_compile_order -fileset sources_1
+export_ip_user_files -of_objects  [get_files {{D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sources_1/new/N_bit_shift_register.v}}] -no_script -reset -force -quiet
+remove_files  {{D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sources_1/new/N_bit_shift_register.v}}
+file delete -force {D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sources_1/new/N_bit_shift_register.v}
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top N_bit_register_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top N_bit_register [current_fileset]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sim_1
+update_compile_order -fileset sources_1
+current_sim simulation_6
+close_sim
+launch_simulation
+source N_bit_register_tb.tcl
+update_compile_order -fileset sources_1
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top n_bit_2_x_1_MUX [current_fileset]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sources_1
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top n_bit_2_x_1_MUX_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sim_1
+current_sim simulation_10
+close_sim
+launch_simulation
+source n_bit_2_x_1_MUX_tb.tcl
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+close [ open {D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sim_1/new/n_bit_shift_left_tb.v} w ]
+add_files -fileset sim_1 {{D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sim_1/new/n_bit_shift_left_tb.v}}
+update_compile_order -fileset sim_1
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top n_bit_shift_left_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sim_1
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top n_bit_shift_left [current_fileset]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sources_1
+launch_simulation
+launch_simulation
+launch_simulation
+source n_bit_shift_left_tb.tcl
+close_sim
+launch_simulation
+source n_bit_shift_left_tb.tcl
+close_sim
+launch_simulation
+source n_bit_shift_left_tb.tcl
+close_sim
+launch_simulation
+source n_bit_shift_left_tb.tcl
+close_sim
+current_sim simulation_12
+close_sim
+current_sim simulation_11
+close_sim
+current_sim simulation_8
+close_sim
+close_sim
