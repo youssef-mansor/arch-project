@@ -21,6 +21,27 @@
 
 
 module ALU_control_unit(
-
+    input [1:0] ALUOp,
+    input [14:12] funct3,
+    input bit_30,
+    output reg [3:0] ALU_selection
     );
+   always @(*) begin
+         case(ALUOp)
+             2'b00: begin
+                         ALU_selection = 4'b0010;
+                    end
+             2'b01: begin
+                         ALU_selection = 4'b0110;
+                    end
+             2'b10: begin
+                        case (funct3)
+                            3'b000:  ALU_selection = bit_30 ? 4'b0110 : 4'b0010;
+                            3'b111:  ALU_selection = bit_30 ? 4'bxxxx : 4'b0000;
+                            3'b110:  ALU_selection = bit_30 ? 4'bxxxx : 4'b0001;
+                        endcase
+                    end
+             default: ALU_selection = 4'bxxxx;
+        endcase
+     end
 endmodule

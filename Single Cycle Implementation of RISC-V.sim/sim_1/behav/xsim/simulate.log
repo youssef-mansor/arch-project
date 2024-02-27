@@ -1,0 +1,9 @@
+Vivado Simulator 2018.2
+Time resolution is 1 ps
+Time=                   0 | Inst_6_2=00000 | Branch=0 | MemRead=1 | MemtoReg=1 | ALUOp=00 | MemWrite=0 | ALUsrc=1 | RegWrite=1
+Time=               50000 | Inst_6_2=01100 | Branch=0 | MemRead=0 | MemtoReg=0 | ALUOp=10 | MemWrite=0 | ALUsrc=0 | RegWrite=1
+Time=               60000 | Inst_6_2=00000 | Branch=0 | MemRead=1 | MemtoReg=1 | ALUOp=00 | MemWrite=0 | ALUsrc=1 | RegWrite=1
+Time=               70000 | Inst_6_2=01000 | Branch=0 | MemRead=0 | MemtoReg=x | ALUOp=00 | MemWrite=1 | ALUsrc=1 | RegWrite=0
+Time=               80000 | Inst_6_2=11000 | Branch=1 | MemRead=0 | MemtoReg=x | ALUOp=01 | MemWrite=0 | ALUsrc=0 | RegWrite=0
+Time=               90000 | Inst_6_2=11111 | Branch=1 | MemRead=0 | MemtoReg=x | ALUOp=01 | MemWrite=0 | ALUsrc=0 | RegWrite=0
+$finish called at time : 100 ns : File "D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sim_1/new/control_unit_tb.v" Line 73
