@@ -29,7 +29,7 @@
 //    input s,//selection
 //    output o //output
 //    );
-module N_bit_register #(parameter N = 8)(
+module N_bit_register #(parameter N = 32)(
     input load,
     input clk,
     input rst,
