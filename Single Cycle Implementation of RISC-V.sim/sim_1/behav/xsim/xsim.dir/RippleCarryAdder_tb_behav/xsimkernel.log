@@ -2,3 +2,6 @@ Running: xsim.dir/RippleCarryAdder_tb_behav/xsimk.exe -simmode gui -wdb RippleCa
 Design successfully loaded
 Design Loading Memory Usage: 6692 KB (Peak: 6692 KB)
 Design Loading CPU Usage: 0 ms
+Simulation completed
+Simulation Memory Usage: 7388 KB (Peak: 7388 KB)
+Simulation CPU Usage: 15 ms
