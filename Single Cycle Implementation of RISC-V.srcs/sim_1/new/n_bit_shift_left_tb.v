@@ -31,14 +31,39 @@
 
 module n_bit_shift_left_tb;
     reg [3:0] D;
-    wire [3:0]Q;
- 
-    
+    wire [3:0] Q;
     
     n_bit_shift_left nbsl(
-                          .D(D),
-                          .Q(Q));
+        .D(D),
+        .Q(Q)
+    );
+    
     initial begin
-        D = 4'b0101;
+        // Test Case 1: Basic left shift
+        D = 4'b0101; // Input: 0101, Expected Output: 1010
+        #10; // Wait for 10 time units to observe the change
+        $display("Test Case 1: D=0101, Q=%b", Q);
+        
+        // Test Case 2: Left shift with leading 1
+        D = 4'b1001; // Input: 1001, Expected Output: 0010
+        #10;
+        $display("Test Case 2: D=1001, Q=%b", Q);
+        
+        // Test Case 3: Left shift with all zeros
+        D = 4'b0000; // Input: 0000, Expected Output: 0000
+        #10;
+        $display("Test Case 3: D=0000, Q=%b", Q);
+        
+        // Test Case 4: Left shift with all ones
+        D = 4'b1111; // Input: 1111, Expected Output: 1110
+        #10;
+        $display("Test Case 4: D=1111, Q=%b", Q);
+        
+        // Test Case 5: Left shift with alternating bits
+        D = 4'b1010; // Input: 1010, Expected Output: 0100
+        #10;
+        $display("Test Case 5: D=1010, Q=%b", Q);
+        $finish;
     end
 endmodule
+

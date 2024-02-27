@@ -59,16 +59,41 @@ module N_bit_register_tb;
         D = 0;
         #(period * 2) rst = 1'b0;
         
+        // Test Case 1: Load and verify a value
         #(period * 1) load = 1'b1;
         D = 2003;
         #(period * 1);
         
         if(Q == D)
-            $display("Correct Operation");
+            $display("Correct Operation for D=2003");
         else
-            $display("Wronger Operation");
+            $display("Wrong Operation for D=2003");
+        
+        // Test Case 2: Load a different value
+        load = 1'b0; // Reset load signal
+        #(period * 2); // Wait for 2 clock cycles
+        load = 1'b1; // Enable load
+        D = 1234; // Load a new value
+        #(period * 1);
+        
+        if(Q == D)
+            $display("Correct Operation for D=1234");
+        else
+            $display("Wrong Operation for D=1234");
+
+        // Test Case 3: Reset after loading a value
+        rst = 1'b1; // Activate reset
+        #(period * 1); // Wait for a clock cycle
+        rst = 1'b0; // Deactivate reset
+        load = 1'b0; // Ensure load is not active
+        
+        if(Q == 0)
+            $display("Correct Reset Operation");
+        else
+            $display("Wrong Reset Operation");
             
         $finish;
     end
     
 endmodule
+

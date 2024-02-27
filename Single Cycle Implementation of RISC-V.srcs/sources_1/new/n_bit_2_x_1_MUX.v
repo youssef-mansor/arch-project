@@ -19,11 +19,11 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-module n_bit_2_x_1_MUX #(N = 4)(
-    input [3:0] a,
-    input [3:0] b,
+module n_bit_2_x_1_MUX #(N = 4)(//TODO potential error
+    input [N-1:0] a,
+    input [N-1:0] b,
     input s,
-    output [3:0] o
+    output [N-1:0] o
     );
     
     genvar i;
