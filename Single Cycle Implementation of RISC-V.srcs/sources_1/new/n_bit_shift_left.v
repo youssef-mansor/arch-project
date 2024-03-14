@@ -47,7 +47,7 @@
 //    end
 //endmodule
 
-module  n_bit_shift_left #(parameter N = 4)(
+module  n_bit_shift_left #(parameter N = 32)(
     input [N-1:0] D,
     output [N-1:0] Q
     );

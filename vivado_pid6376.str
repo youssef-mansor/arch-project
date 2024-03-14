@@ -1,0 +1,142 @@
+/*
+
+Xilinx Vivado v2018.2 (64-bit) [Major: 2018, Minor: 2]
+SW Build: 2258646 on Thu Jun 14 20:03:12 MDT 2018
+IP Build: 2256618 on Thu Jun 14 22:10:49 MDT 2018
+
+Process ID: 6376
+License: Customer
+
+Current time: 	Sun Mar 10 14:06:13 GMT+02:00 2024
+Time zone: 	GMT+02:00 (GMT+02:00)
+
+OS: Windows 10
+OS Version: 10.0
+OS Architecture: amd64
+Available processors (cores): 8
+
+Screen size: 1536x864
+Screen resolution (DPI): 96
+Available screens: 1
+Available disk space: 19 GB
+Default font: family=Dialog,name=Dialog,style=plain,size=12
+
+Java version: 	1.8.0_112 64-bit
+Java home: 	D:/Xilinx/Vivado/2018.2/tps/win64/jre
+Java executable location: 	D:/Xilinx/Vivado/2018.2/tps/win64/jre/bin/java.exe
+Java initial memory (-Xms): 	128 MB
+Java maximum memory (-Xmx):	 2 GB
+
+
+User name: 	AUC
+User home directory: C:/Users/AUC
+User working directory: D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V
+User country: 	US
+User language: 	en
+User locale: 	en_US
+
+RDI_BASEROOT: D:/Xilinx/Vivado
+HDI_APPROOT: D:/Xilinx/Vivado/2018.2
+RDI_DATADIR: D:/Xilinx/Vivado/2018.2/data
+RDI_BINDIR: D:/Xilinx/Vivado/2018.2/bin
+
+Vivado preferences file location: C:/Users/AUC/AppData/Roaming/Xilinx/Vivado/2018.2/vivado.xml
+Vivado preferences directory: C:/Users/AUC/AppData/Roaming/Xilinx/Vivado/2018.2/
+Vivado layouts directory: C:/Users/AUC/AppData/Roaming/Xilinx/Vivado/2018.2/layouts
+PlanAhead jar file location: 	D:/Xilinx/Vivado/2018.2/lib/classes/planAhead.jar
+Vivado log file location: 	D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/vivado.log
+Vivado journal file location: 	D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/vivado.jou
+Engine tmp dir: 	D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/.Xil/Vivado-6376-DESKTOP-1LL5LJA
+
+Xilinx Environment Variables
+----------------------------
+XILINX: D:/Xilinx/Vivado/2018.2/ids_lite/ISE
+XILINX_DSP: D:/Xilinx/Vivado/2018.2/ids_lite/ISE
+XILINX_PLANAHEAD: D:/Xilinx/Vivado/2018.2
+XILINX_SDK: D:/Xilinx/SDK/2018.2
+XILINX_VIVADO: D:/Xilinx/Vivado/2018.2
+XILINX_VIVADO_HLS: D:/Xilinx/Vivado/2018.2
+
+
+GUI allocated memory:	204 MB
+GUI max memory:		3,052 MB
+Engine allocated memory: 509 MB
+
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+*/
+
+// TclEventType: START_GUI
+// Tcl Message: start_gui 
+// TclEventType: PROJECT_OPEN_DIALOG
+// [GUI Memory]: 61 MB (+61475kb) [00:00:09]
+// [Engine Memory]: 473 MB (+344447kb) [00:00:09]
+// bx (ck):  Open Project : addNotify
+// Opening Vivado Project: D:\Auc_Crs\Sprng24\Arch_lab\Single Cycle Implementation of RISC-V\Single Cycle Implementation of RISC-V.xpr. Version: Vivado v2018.2 
+// TclEventType: DEBUG_PROBE_SET_CHANGE
+// Tcl Message: open_project {D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.xpr} 
+// TclEventType: MSGMGR_MOVEMSG
+// TclEventType: FILE_SET_NEW
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_CURRENT
+// TclEventType: PROJECT_NEW
+// Tcl Message: open_project {D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.xpr} 
+// Tcl Message: Scanning sources... Finished scanning sources 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1704] No user IP repositories specified 
+// Tcl Message: INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'D:/Xilinx/Vivado/2018.2/data/ip'. 
+// TclEventType: PROJECT_NEW
+// [Engine Memory]: 544 MB (+50163kb) [00:00:14]
+// [GUI Memory]: 68 MB (+3881kb) [00:00:16]
+// [Engine Memory]: 581 MB (+9897kb) [00:00:16]
+// HMemoryUtils.trashcanNow. Engine heap size: 608 MB. GUI used memory: 37 MB. Current time: 3/10/24 2:06:19 PM GMT+02:00
+// Project name: Single Cycle Implementation of RISC-V; location: D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V; part: xc7a100tcsg324-1
+// [Engine Memory]: 611 MB (+1166kb) [00:00:17]
+// Tcl Message: open_project: Time (s): cpu = 00:00:04 ; elapsed = 00:00:07 . Memory (MB): peak = 835.777 ; gain = 105.270 
+dismissDialog("Open Project"); // bx (ck)
+// TclEventType: DG_ANALYSIS_MSG_RESET
+// TclEventType: DG_GRAPH_GENERATED
+// Tcl Message: update_compile_order -fileset sources_1 
+// Elapsed time: 78 seconds
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, Syntax Error Files]", 1, true); // B (D, ck) - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, Syntax Error Files]", 1, true, false, false, false, false, true); // B (D, ck) - Double Click - Node
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, Syntax Error Files, RISC_V.v]", 2, false); // B (D, ck)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, Syntax Error Files, RISC_V.v]", 2, false, false, false, false, false, true); // B (D, ck) - Double Click
+selectCodeEditor("RISC_V.v", 366, 201); // ce (w, ck)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_ANALYSIS_MSG_RESET
+// TclEventType: DG_ANALYSIS_MSG_RESET
+// TclEventType: DG_GRAPH_GENERATED
+// [GUI Memory]: 72 MB (+742kb) [00:01:52]
+// [GUI Memory]: 78 MB (+2477kb) [00:01:52]
+// Elapsed time: 11 seconds
+maximizeView(PAResourceOtoP.PAViews_BASE_WORKSPACE, "BaseWorkspace"); // O (Q, ck)
+// Elapsed time: 48 seconds
+selectButton(PAResourceCommand.PACommandNames_TOGGLE_VIEW_NAV, (String) null); // B (E, ck)
+// Run Command: PAResourceCommand.PACommandNames_TOGGLE_VIEW_NAV
+// HMemoryUtils.trashcanNow. Engine heap size: 638 MB. GUI used memory: 40 MB. Current time: 3/10/24 2:08:50 PM GMT+02:00
+// Elapsed time: 78 seconds
+selectCodeEditor("RISC_V.v", 184, 450); // ce (w, ck)
+selectCodeEditor("RISC_V.v", 125, 504); // ce (w, ck)
+// Elapsed time: 33 seconds
+selectCodeEditor("RISC_V.v", 216, 332); // ce (w, ck)
+// Elapsed time: 19 seconds
+selectCodeEditor("RISC_V.v", 270, 334); // ce (w, ck)
+typeControlKey((HResource) null, "RISC_V.v", 'v'); // ce (w, ck)
+// Elapsed time: 19 seconds
+selectCodeEditor("RISC_V.v", 188, 337); // ce (w, ck)
+// Elapsed time: 13 seconds
+selectCodeEditor("RISC_V.v", 218, 331); // ce (w, ck)
+selectCodeEditor("RISC_V.v", 218, 331, false, false, false, false, true); // ce (w, ck) - Double Click
+selectCodeEditor("RISC_V.v", 280, 336); // ce (w, ck)
+selectCodeEditor("RISC_V.v", 172, 352); // ce (w, ck)
+// [GUI Memory]: 82 MB (+495kb) [00:17:38]
+// [GUI Memory]: 86 MB (+84kb) [00:27:18]
+// HMemoryUtils.trashcanNow. Engine heap size: 638 MB. GUI used memory: 41 MB. Current time: 3/10/24 2:38:53 PM GMT+02:00
+// [GUI Memory]: 91 MB (+620kb) [00:53:14]
+// HMemoryUtils.trashcanNow. Engine heap size: 638 MB. GUI used memory: 39 MB. Current time: 3/10/24 3:08:56 PM GMT+02:00
+// HMemoryUtils.trashcanNow. Engine heap size: 638 MB. GUI used memory: 38 MB. Current time: 3/10/24 3:38:58 PM GMT+02:00
+// WARNING: HTimer (ActiveMsgMonitor Process Messages Timer) is taking 588ms to process. Increasing delay to 2000 ms.
+// WARNING: HSwingWorker (Update Runs Swing Worker) is taking 1710 ms. Increasing delay to 3000 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 638 MB. GUI used memory: 38 MB. Current time: 3/10/24 4:09:03 PM GMT+02:00
+// WARNING: HTimer (ActiveMsgMonitor Process Messages Timer) is taking 635ms to process. Increasing delay to 3000 ms.

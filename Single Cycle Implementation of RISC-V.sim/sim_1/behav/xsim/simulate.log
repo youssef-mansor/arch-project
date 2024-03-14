@@ -1,8 +1,2 @@
 Vivado Simulator 2018.2
 Time resolution is 1 ps
-Addr: 0, Data out: 00000000010000010000000100010011
-Addr: 1, Data out: 01000010010000000000001000101101
-Addr: 2, Data out: 01000000010000010000000000010000
-Addr: 3, Data out: 00000000010000010000000100010010
-Addr: 4, Data out: 01000000010000010000000000010100
-$finish called at time : 60 ns : File "D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sim_1/new/InstMem_tb.v" Line 57

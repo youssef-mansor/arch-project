@@ -22,7 +22,7 @@
 
 module ALU_control_unit(
     input [1:0] ALUOp,
-    input [14:12] funct3,
+    input [2:0] funct3, //instruction[14:12]
     input bit_30,
     output reg [3:0] ALU_selection
     );

@@ -21,8 +21,8 @@
 
 
 module MUX(
-    input a,//input 0
-    input b,//input 1
+    input a,
+    input b,
     input s,//selection
     output o //output
     );

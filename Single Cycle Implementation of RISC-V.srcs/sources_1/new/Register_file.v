@@ -57,7 +57,7 @@ module Register_file(
             // Write write_data into register at write_reg_indx
             // Ensure that register 0 is not writable (common in many architectures)
             //if (write_reg_indx != 0) begin
-                registers[write_reg_indx] <= write_data;
+                registers[write_reg_indx] <= write_reg_indx == 0? 0:write_data; //can't change x0 (TODO)
             //end
         end
     end

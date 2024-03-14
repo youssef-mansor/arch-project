@@ -30,6 +30,13 @@ module DataMem(
     
     reg [31:0] mem [0:63];
     
+    //initialize the data memory
+    initial begin
+        mem[0] = 32'd17;
+        mem[1] = 32'd9;
+        mem[2] = 32'd25;
+    end
+    
     always @(posedge clk) begin
         if (MemWrite) begin
             // Write data to memory at the specified address
