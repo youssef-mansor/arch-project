@@ -45,22 +45,24 @@ module Register_file(
     // Initialize registers to 0 on reset
     integer i;
     
-    always @(posedge rst) begin
-        for (i = 0; i < 32; i = i + 1) begin
-            registers[i] <= 0;
-        end
-    end
+//    always @(posedge clk) begin
+//        registers[0] = 0;
+//    end
+    
+  
     
     // Handle write operation on the positive edge of the clock
     always @(posedge clk) begin
-        if (reg_write) begin
-            // Write write_data into register at write_reg_indx
-            // Ensure that register 0 is not writable (common in many architectures)
-            //if (write_reg_indx != 0) begin
-                registers[write_reg_indx] <= write_reg_indx == 0? 0:write_data; //can't change x0 (TODO)
-            //end
+     if(rst == 1'b1) begin
+               for (i = 0; i < 32; i = i + 1) begin
+                   registers[i] <= 0;
+               end
+           end
+       else begin
+         if(reg_write && write_reg_indx != 0)
+                registers[write_reg_indx] <= write_data; //can't change x0 (TODO)
         end
-    end
+      end
     
     // Assign read_reg_1_data and read_reg_2_data to the register of index read_reg_1_indx and read_reg_2_indx
     // These are combinational logic, directly mapping the outputs to the register array

@@ -43,7 +43,6 @@ RISC_V uut (
     .rst(rst), 
     .ledSel(ledSel), 
     .ssdSel(ssdSel), 
-    .ssd_clk(ssd_clk), 
     .LEDs(LEDs), 
     .ssd(ssd)
 );
@@ -56,22 +55,22 @@ initial begin
     ssdSel = 0;
     ssd_clk = 0;
 
-    // Add stimulus here
     #100;        
     rst = 0; // De-assert reset after 100ns
 
-    // Example stimulus
-    #100;
-    ledSel = 2'b01;
-    ssdSel = 4'b0010;
-
-    #100;
-    ledSel = 2'b10;
-    ssdSel = 4'b0100;
+    // Cycle through all combinations of ledSel and ssdSel
+    for(ledSel = 0; ledSel < 4; ledSel = ledSel + 1) begin
+        for(ssdSel = 0; ssdSel < 16; ssdSel = ssdSel + 1) begin
+            #100; // Wait for a period to observe the change
+            $display("Time: %t, ledSel: %b, ssdSel: %b, LEDs: %h, ssd: %h", $time, ledSel, ssdSel, LEDs, ssd);
+        end
+    end
 
     // Finish simulation
-    #200;
+    #100;
+    $finish;
 end
+
 
 endmodule
 

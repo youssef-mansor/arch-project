@@ -24,8 +24,7 @@ module RISC_V(
     input  clk, //connected to a push button
     input rst,  //connected to a push button (initialize pc and RF to zeros)
     input [1:0] ledSel,// Select infomration displayed on leds (instructions, control signals)
-    input [3:0] ssdSel,// Select info displayed on SSD (PC, rs1, rs2, imm, etc..)
-    input ssd_clk, //connected to pin E3
+    input [3:0] ssdSel,// Select info displayed on SSD (PC, rs1, rs2, imm, etc..) //connected to pin E3
     output reg [15:0] LEDs,
     output reg [12:0] ssd
     );

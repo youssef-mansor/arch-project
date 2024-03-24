@@ -35,6 +35,10 @@ module DataMem(
         mem[0] = 32'd17;
         mem[1] = 32'd9;
         mem[2] = 32'd25;
+//        mem[0] = 32'd3;
+//        mem[1] = 32'd4;
+//        mem[2] = 32'd3; //value of loop iterator at the beginning
+//        mem[3] = -1; //to be added to loop iterator each iteration till equal zero
     end
     
     always @(posedge clk) begin

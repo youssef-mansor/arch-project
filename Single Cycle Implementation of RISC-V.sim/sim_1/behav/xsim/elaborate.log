@@ -1,9 +1,0 @@
-Vivado Simulator 2018.2
-Copyright 1986-1999, 2001-2018 Xilinx, Inc. All Rights Reserved.
-Running: D:/Xilinx/Vivado/2018.2/bin/unwrapped/win64.o/xelab.exe -wto c5697a1fee564a8f87a9c1b0f1e2a3ac --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot RISC_V_tb_behav xil_defaultlib.RISC_V_tb xil_defaultlib.glbl -log elaborate.log 
-Using 2 slave threads.
-Starting static elaboration
-WARNING: [VRFC 10-278] actual bit length 32 differs from formal bit length 6 for port addr [D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sources_1/new/RISC_V.v:70]
-WARNING: [VRFC 10-278] actual bit length 32 differs from formal bit length 6 for port addr [D:/Auc_Crs/Sprng24/Arch_lab/Single Cycle Implementation of RISC-V/Single Cycle Implementation of RISC-V.srcs/sources_1/new/RISC_V.v:115]
-Completed static elaboration
-INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel

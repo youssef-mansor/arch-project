@@ -34,40 +34,40 @@ module control_unit(
    always @(*) begin
         case(Inst_6_2)
             5'b01100: begin
-                          assign Branch = 0;
-                          assign MemRead = 0;
-                          assign MemtoReg = 0;
-                          assign ALUOp = 2'b10;
-                          assign MemWrite = 0;
-                          assign ALUsrc = 0;
-                          RegWrite = 1;
+                           Branch = 0;
+                           MemRead <= 0;
+                           MemtoReg <= 0;
+                           ALUOp = 2'b10;
+                           MemWrite <= 0;
+                           ALUsrc <= 0;
+                          RegWrite <= 1;
                       end
             5'b00000:begin
-                         assign Branch = 0;
-                         assign MemRead = 1;
-                         assign MemtoReg = 1;
-                         assign ALUOp = 2'b00;
-                         assign MemWrite = 0;
-                         assign ALUsrc = 1;
-                         RegWrite = 1;
+                          Branch <= 0;
+                          MemRead <= 1;
+                          MemtoReg <= 1;
+                          ALUOp <= 2'b00;
+                          MemWrite <= 0;
+                          ALUsrc <= 1;
+                         RegWrite <= 1;
                      end//
             5'b01000: begin
-                         assign Branch = 0;
-                         assign MemRead = 0;
-                         assign MemtoReg = 1'bx;//don't care
-                         assign ALUOp = 2'b00;
-                         assign MemWrite = 1;
-                         assign ALUsrc = 1;
-                         RegWrite = 0;
+                          Branch <= 0;
+                          MemRead <= 0;
+                          MemtoReg <= 1'bx;//don't care
+                          ALUOp <= 2'b00;
+                          MemWrite <= 1;
+                          ALUsrc <= 1;
+                         RegWrite <= 0;
                      end//
             5'b11000: begin
-                         assign Branch = 1;
-                         assign MemRead = 0;
-                         assign MemtoReg = 1'bx;//don't care
-                         assign ALUOp = 2'b01;
-                         assign MemWrite = 0;
-                         assign ALUsrc = 0;
-                            RegWrite = 0;
+                          Branch <= 1;
+                          MemRead <= 0;
+                          MemtoReg <= 1'bx;//don't care
+                          ALUOp <= 2'b01;
+                          MemWrite <= 0;
+                          ALUsrc <= 0;
+                            RegWrite <= 0;
                         end//
             default: ;//don't do anything
         endcase
