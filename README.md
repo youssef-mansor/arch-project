@@ -161,9 +161,47 @@ excluded from any decoding circuit inputs.
     output reg [31:0] data_out);
     ```
   - **Function**:  For similar reasons to the instruction memory, we will implement a word addressable data memory with a maximum capacity of 64 words (256 bytes) with 6 address bits. Similarly, since the ALU computes the byte address of the data item to be loaded or stored, we must divide it by 4 (discard the least significant 2 bits) before connecting it to the address input of the data memory to convert it to a word address
+- BCD
+  - ```
+    module BCD ( 
+    input [12:0] num, 
+    output reg [3:0] Thousands,
+    output reg [3:0] Hundreds, 
+    output reg [3:0] Tens, 
+    output reg [3:0] Ones 
+    ); 
+    ```
+  - **Function**: Binary to Decimal conversion.
+- Four_Digit_Seven_Segment_Driver_Optimized
+  - ```
+    module Four_Digit_Seven_Segment_Driver_Optimized(
+    input clk,
+    input [12:0] num, 
+    output reg [3:0] Anode, 
+    output reg [6:0] LED_out
+    );
+    ```
+  - **Function**: Driver for the seven segment display in the Nexys A7-100T
+-RISCV_SSD_Top
+  - ```
+    module RISCV_SSD_Top(
+    input clk_push_button,
+    input rst,
+    input ssd_clk,
+    input [1:0] ledSel,
+    input [3:0] ssdSel,
+    output [3:0] Anode,
+    output [15:0] LEDs,
+    output [6:0] LED_out
+    );
+    ```
+  - **Function**: top-level module instantiating both the RISC-V module and the SSD driver module to connect them together.
 
 ## Building the Project
-
+1. Download `Single Cycle Implementation of RISC-V.srcs` Folder.
+2. Open Vivado.
+3. Create New Project.
+4. Add  `Single Cycle Implementation of RISC-V.srcs` Folder to the project through `Add directory` button.
 
 ## Tech Stack
 
