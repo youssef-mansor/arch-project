@@ -61,6 +61,27 @@ that field. For R-Format instructions, the actual operation is determined by the
 funct7 fields (only bit 30 from the funct7 field is needed).
 - The least significant 2 bits of the 7-bit opcode field are always 11 and as such can be
 excluded from any decoding circuit inputs.
+- If the datapath is implemented without any ports, we will not be able to verify that it is actually executing instructions, so we need to add a monitoring mechanism allowing us to peek inside the processor and check some of the values on the wire. In order to do so we will define the following 2 output ports:
+  1. A 16-bit output port connected to the 16 LEDs on the Nexys A7 board. Based on a 2-bit led selection input port (e.g., ledSel) connected to 2 of the Nexys A7 input switches, these LEDs will be used to view either:
+      - The instruction currently being executed. These are 32 bits, so we will split them in half. When ledSel = 00, output Instruction[15:0] and when ledSel = 01, output Instruction [31:16].
+      - A concatenation of all the control signals (including ALUOp, ALU selection lines, the zero flag, and the output of the branching AND gate). These are exactly 14 bits (the most significant 2 bits of the 16-bit output will always be zero). This concatenation of signals should be outputted when ledSel = 10;
+     
+  2. A 13-bit output port connected to one of the two 4-digits seven segment displays (SSD) on the Nexys A7 board. Based on a 4-bit SSD selection input port (e.g., ssdSel) connected to 4 of the Nexys A7 input switches, the SSD will be used to view either:
+      - The PC output (when ssdSel = 0000)
+      - The PC+4 adder output (when ssdSel = 0001)
+      - The branch target adder output (when ssdSel = 0010)
+      - The PC input (when ssdSel = 0011)
+      - The data read from the register file based on RS1 (when ssdSel = 0100)
+      - The data read from the register file based on RS2 (when ssdSel = 0101)
+      - The data provided as an input to the register file (when ssdSel = 0110)
+      - The immediate generator output (when ssdSel = 0111)
+      - The shift left 1 output (when ssdSel = 1000)
+      - The output of the ALU 2nd source multiplexer (when ssdSel = 1001)
+      - The output of the ALU (when ssdSel = 1010)
+      - The memory output (when ssdSel = 1011)
+    
+Note that all the above values are 32-bit values; however, we will only be displaying the least significant 13-bits of each which is enough for this project’s purposes.
+
 
 ### Components of the Design
 
@@ -161,9 +182,47 @@ excluded from any decoding circuit inputs.
     output reg [31:0] data_out);
     ```
   - **Function**:  For similar reasons to the instruction memory, we will implement a word addressable data memory with a maximum capacity of 64 words (256 bytes) with 6 address bits. Similarly, since the ALU computes the byte address of the data item to be loaded or stored, we must divide it by 4 (discard the least significant 2 bits) before connecting it to the address input of the data memory to convert it to a word address
+- BCD
+  - ```
+    module BCD ( 
+    input [12:0] num, 
+    output reg [3:0] Thousands,
+    output reg [3:0] Hundreds, 
+    output reg [3:0] Tens, 
+    output reg [3:0] Ones 
+    ); 
+    ```
+  - **Function**: Binary to Decimal conversion.
+- Four_Digit_Seven_Segment_Driver_Optimized
+  - ```
+    module Four_Digit_Seven_Segment_Driver_Optimized(
+    input clk,
+    input [12:0] num, 
+    output reg [3:0] Anode, 
+    output reg [6:0] LED_out
+    );
+    ```
+  - **Function**: Driver for the seven segment display in the Nexys A7-100T
+- RISCV_SSD_Top
+  - ```
+    module RISCV_SSD_Top(
+    input clk_push_button,
+    input rst,
+    input ssd_clk,
+    input [1:0] ledSel,
+    input [3:0] ssdSel,
+    output [3:0] Anode,
+    output [15:0] LEDs,
+    output [6:0] LED_out
+    );
+    ```
+  - **Function**: top-level module instantiating both the RISC-V module and the SSD driver module to connect them together.
 
 ## Building the Project
-
+1. Download `Single Cycle Implementation of RISC-V.srcs` Folder.
+2. Open Vivado.
+3. Create New Project.
+4. Add  `Single Cycle Implementation of RISC-V.srcs` Folder to the project through `Add directory` button.
 
 ## Tech Stack
 
