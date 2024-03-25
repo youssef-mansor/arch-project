@@ -203,7 +203,7 @@ Note that all the above values are 32-bit values; however, we will only be displ
     );
     ```
   - **Function**: Driver for the seven segment display in the Nexys A7-100T
--RISCV_SSD_Top
+- RISCV_SSD_Top
   - ```
     module RISCV_SSD_Top(
     input clk_push_button,
