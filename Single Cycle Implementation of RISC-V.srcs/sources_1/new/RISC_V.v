@@ -43,6 +43,9 @@ module RISC_V(
     //ALU
     wire [3:0] ALU_sel;
     wire zeroFlag;
+    wire  carryFlag;
+    wire  negativeFlag;
+    wire  overflowFlag;
     wire [31:0] ALU_2nd_src_MUX_out;
     wire [31:0] ALU_output;
     
@@ -126,12 +129,23 @@ module RISC_V(
    //Adder for immediate
    assign branch_target = shift_left_1_out + PC;
    //Adder for PC
-   assign PC_plus_4 = PC + 4; 
-   //MUX for PC input 
+   assign PC_plus_4 = PC + 4;
+
+   wire PC_src; // TODO: this should be a 2-bit output from the CU to support JALR, JAL as well
+
+   branch_control branch_control_unit(.branch_op(Branch)) // TODO: this should be a 2-bit input from the CU to support JALR, JAL as well
+                                      .funct3(instruction[14:12]),
+                                      .zeroFlag(zeroFlag),
+                                      .carryFlag(carryFlag),
+                                      .negativeFlag(negativeFlag),
+                                      .overflowFlag(overflowFlag),
+                                      .PC_src(PC_src);
+
    n_bit_2_x_1_MUX mux_pc(.a(branch_target),
-                          .b(PC_plus_4),
-                          .s(zeroFlag & Branch),//TODO potential error
+                          .b(PC_plus_4), // TODO: add inputs c and d for JALR, JAL
+                          .s(PC_src),
                           .o(PC_input));
+
           
    //RISC-V input output
    always @(*) begin
