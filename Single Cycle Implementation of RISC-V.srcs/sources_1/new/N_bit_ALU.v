@@ -65,13 +65,7 @@ module N_bit_ALU #(parameter N = 32)(input [N-1:0]      A,
 
    assign CarryFlag = ripple_carry_adder_cout;
 
-   always @(*) begin
-      if (sel[2] == 1'b0) { // Addition
-         OverflowFlag = (A[N-1] == B[N-1]) && (ripple_carry_adder_sum[N-1] != A[N-1]);
-      } else { // Subtraction
-         OverflowFlag = (A[N-1] != B[N-1]) && (ripple_carry_adder_sum[N-1] == B[N-1]);
-      }
-   end
+   assign OverflowFlag = (A[N-1] ^ ((~B)[N-1]) ^ ALU_output[N-1] ^ CarryFlag);
 
 
    n_bit_2_x_1_MUX #(32) mux_B_or_not_B(.a(~B), .b(B), .s(sel[2]), .o(ALU_B_input)); //assign ALU_B_input
