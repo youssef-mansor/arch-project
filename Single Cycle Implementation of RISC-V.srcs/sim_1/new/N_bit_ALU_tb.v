@@ -65,6 +65,10 @@ initial begin
     // OR Test
     A_tb = 15; B_tb = 10; sel_tb = 4'b0001;
     #10; // Wait for the operation to be performed
+    
+    // SLL Test
+    A_tb = 15; B_tb = 1; sel_tb = 4'b0011;
+    #10; //Wait for the operation to be performed
 
     // Complete the simulation
     $finish;
