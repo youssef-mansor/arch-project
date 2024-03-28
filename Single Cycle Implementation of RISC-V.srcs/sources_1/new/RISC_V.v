@@ -18,12 +18,13 @@ module RISC_V(
    wire                         zero_and_branch;
 
    //Control Unit
-   wire [1:0]                   ALUOp;
+   wire [3:0]                   ALUOp;
    wire                         MemRead, MemtoReg, MemWrite, AlUSrc, RegWrite, pc_halt;
    wire [1:0]                   Branch;
 
    //ALU
    wire [3:0]                   ALU_sel;
+   wire                         ALUSrc;
    wire                         zeroFlag;
    wire                         carryFlag;
    wire                         negativeFlag;
@@ -132,7 +133,6 @@ module RISC_V(
                           .d(32'b0),
                           .s(PC_src),
                           .o(PC_input));
-
 
    //RISC-V input output
    always @(*) begin

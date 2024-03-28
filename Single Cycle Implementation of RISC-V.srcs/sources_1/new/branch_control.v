@@ -1,4 +1,4 @@
-module branch_control(input [1:0]      branch_op, // TODO: this should be a 2-bit input from the CU to support JALR, JAL as well
+module branch_control(input [1:0]      branch_op,
                       input [2:0] funct3,
                       input       zeroFlag,
                       input       carryFlag,

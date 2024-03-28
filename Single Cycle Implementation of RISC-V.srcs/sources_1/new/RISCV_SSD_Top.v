@@ -57,6 +57,7 @@ module RISCV_SSD_Top(
                   .LEDs(LEDs),
                   .ssd(number)
                   );
+    
     Four_Digit_Seven_Segment_Driver_Optimized ssd(.clk(ssd_clk),
                                                   .num(number),
                                                   .Anode(Anode),

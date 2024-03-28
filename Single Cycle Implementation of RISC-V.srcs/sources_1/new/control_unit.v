@@ -28,7 +28,7 @@ module control_unit(input [4:0]      Inst_6_2, //represet instruction[6:2]
                     output reg [3:0] ALUOp,
                     output reg       MemWrite,
                     output reg       ALUsrc,
-                    output reg       RegWrite
+                    output reg       RegWrite,
                     output reg       pc_halt
                     );
 
@@ -68,7 +68,7 @@ module control_unit(input [4:0]      Inst_6_2, //represet instruction[6:2]
            Branch <= 2'b00;
            MemRead <= 0;
            MemtoReg <= 0;
-           ALUOp <= 4b'0001;
+           ALUOp <= 4'b0001;
            MemWrite <= 0;
            ALUsrc <= 1;
            RegWrite <= 1;

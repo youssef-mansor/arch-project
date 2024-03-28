@@ -10,13 +10,16 @@ module N_bit_ALU #(parameter N = 32)(input [N-1:0]      A,
                                      output             CarryFlag
                                      );
 
-   wire [31:0] add;
+   wire [N-1:0] add;
+   wire [N-1:0] not_b;
+   
+   assign not_b = ~B;
 
    assign ZeroFlag = (ALU_output == 0);
    assign NegativeFlag = add[N-1];
 
    assign {CarryFlag, add} = sel[0] ? (A + (~B) + 1'b1) : (A + B);
-   assign OverflowFlag = (A[N-1] ^ ((~B)[N-1]) ^ add[N-1] ^ CarryFlag);
+   assign OverflowFlag = A[N-1] ^ not_b[N-1] ^ add[N-1] ^ CarryFlag;
 
    always @(*) begin
       case(sel)
@@ -36,8 +39,7 @@ module N_bit_ALU #(parameter N = 32)(input [N-1:0]      A,
 
         4'b1001:  ALU_output = {31'b0,(NegativeFlag != OverflowFlag)};
         4'b1010:  ALU_output = {31'b0, (~CarryFlag)};
-
-        default: ALU_output = 0
+        default: ALU_output = 0;
       endcase
    end
 
