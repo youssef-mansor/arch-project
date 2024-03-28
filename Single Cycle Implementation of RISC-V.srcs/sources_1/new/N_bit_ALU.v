@@ -60,7 +60,9 @@ module N_bit_ALU #(parameter N = 32)(
     wire [N-1:0] AND_output; //holds A & B
     wire [N-1:0] OR_output; //holds A | B
     wire [N-1:0] SLL_output;
-    wire [N-1:0] SLR_output;
+    wire [N-1:0] SRL_output;
+    wire [N-1:0] SRA_output;
+    wire [4:0] shift_amount = B[N-1:0] > N-1 ? N-1 : B[4:0];
     
     n_bit_2_x_1_MUX #(32) mux_B_or_not_B(.a(~B), .b(B), .s(sel[2]), .o(ALU_B_input)); //assign ALU_B_input
     
@@ -73,8 +75,11 @@ module N_bit_ALU #(parameter N = 32)(
                                               .cout(ripple_carry_adder_cout));
     assign AND_output = A & B;
     assign OR_output = A | B;
-    assign SLL_output = A << B;
-    assign SLR_output = A >> B;
+    
+    assign SLL_output = A << shift_amount;
+    assign SRL_output = A >> shift_amount;
+    assign SRA_output = A >>> shift_amount; //TODO, not working properly
+   
     
    // MUX 16 * 1
    always @(*) begin
@@ -84,7 +89,8 @@ module N_bit_ALU #(parameter N = 32)(
            4'b0000: ALU_output = AND_output;//
            4'b0001: ALU_output = OR_output;//
            4'b0011: ALU_output = SLL_output;
-           4'b0111: ALU_output = SLR_output;
+           4'b0111: ALU_output = SRL_output;
+           4'b0101: ALU_output = SRA_output;
            default: ALU_output = 0;//
        endcase
    end

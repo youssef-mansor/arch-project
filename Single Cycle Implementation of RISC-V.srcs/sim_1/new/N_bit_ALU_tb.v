@@ -51,28 +51,32 @@ initial begin
     #10;
     
     // Addition Test
-    A_tb = 15; B_tb = 10; sel_tb = 4'b0010;
-    #10; // Wait for the operation to be performed
+    //A_tb = 15; B_tb = 10; sel_tb = 4'b0010;
+    //#10; // Wait for the operation to be performed
 
     // Subtraction Test
-    A_tb = 20; B_tb = 10; sel_tb = 4'b0110;
-    #10; // Wait for the operation to be performed
+    //A_tb = 20; B_tb = 10; sel_tb = 4'b0110;
+    //#10; // Wait for the operation to be performed
 
     // AND Test
-    A_tb = 15; B_tb = 10; sel_tb = 4'b0000;
-    #10; // Wait for the operation to be performed
+    //A_tb = 15; B_tb = 10; sel_tb = 4'b0000;
+    //#10; // Wait for the operation to be performed
 
     // OR Test
-    A_tb = 15; B_tb = 10; sel_tb = 4'b0001;
-    #10; // Wait for the operation to be performed
+    //A_tb = 15; B_tb = 10; sel_tb = 4'b0001;
+    //#10; // Wait for the operation to be performed
     
     // SLL Test
     A_tb = 15; B_tb = 1; sel_tb = 4'b0011;
     #10; //Wait for the operation to be performed
     
-    // SLR Test
-    A_tb = 15; B_tb = 1; sel_tb = 4'b0111;
+    // SRL Test
+    A_tb = -14; B_tb = 1; sel_tb = 4'b0111;
     #10
+    
+    //SRA Test
+    A_tb = -14; B_tb = 1; sel_tb = 4'b0101;
+    #10    
 
     // Complete the simulation
     $finish;
