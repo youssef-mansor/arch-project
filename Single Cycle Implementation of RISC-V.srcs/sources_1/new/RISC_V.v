@@ -111,8 +111,9 @@ module RISC_V(
        .clk(clk),
        .MemRead(MemRead),
        .MemWrite(MemWrite),
-       .addr(ALU_output[5:0]/4),
+       .addr(ALU_output[7:0]), // no longer divide by 4 but check for funct3 to better understand what to return.
        .data_in(read_data_2),
+       .funct3(instruction[14:12]),
        .data_out(read_data_mem)
    );
    //MUX for Data Memory output

@@ -26,6 +26,7 @@ module DataMem_tb;
     reg MemWrite;
     reg [5:0] addr;
     reg [31:0] data_in;
+    reg [2:0] funct3;
 
     // Output
     wire [31:0] data_out;
@@ -37,6 +38,7 @@ module DataMem_tb;
         .MemWrite(MemWrite),
         .addr(addr),
         .data_in(data_in),
+        .funct3(funct3),
         .data_out(data_out)
     );
 
@@ -50,6 +52,7 @@ module DataMem_tb;
         MemWrite = 0;
         addr = 0;
         data_in = 0;
+        funct3 = 3'b000;
         //Write operation
         #10;
         addr = 6'b000001;
@@ -60,6 +63,7 @@ module DataMem_tb;
 
         //Read operation
         #10;
+        funct3 = 3'b000;
         addr = 6'b000001;
         MemRead = 1;
         #10;
