@@ -34,51 +34,51 @@ module control_unit(input [4:0]      Inst_6_2, //represet instruction[6:2]
 
    always @(*) begin
       case(Inst_6_2)
-        5'b01100: begin
+        5'b01100: begin // R-type
            Branch = 2'b00;
            MemRead <= 0;
            MemtoReg <= 0;
-           ALUOp = 4'b0010;
+           ALUOp = 4'b0000;
            MemWrite <= 0;
            ALUsrc <= 0;
            RegWrite <= 1;
            pc_halt <= 0;
         end
-        5'b00000:begin
+        5'b00000:begin // LW
            Branch <= 2'b00;
            MemRead <= 1;
            MemtoReg <= 1;
-           ALUOp <= 4'b0000;
+           ALUOp <= 4'b0000; // TODO
            MemWrite <= 0;
            ALUsrc <= 1;
            RegWrite <= 1;
            pc_halt <= 0;
         end//
-        5'b01000: begin
+        5'b01000: begin // SW
            Branch <= 2'b00;
            MemRead <= 0;
            MemtoReg <= 1'bx;//don't care
-           ALUOp <= 4'b0000;
+           ALUOp <= 4'b0000; // TODO
            MemWrite <= 1;
            ALUsrc <= 1;
            RegWrite <= 0;
            pc_halt <= 0;
         end//
-        5'b00100: begin
+        5'b00100: begin // I-type
            Branch <= 2'b00;
            MemRead <= 0;
            MemtoReg <= 0;
-           ALUOp <= 4'b0010;
+           ALUOp <= 4b'0001;
            MemWrite <= 0;
            ALUsrc <= 1;
            RegWrite <= 1;
            pc_halt <= 0;
         end//
-        5'b11000: begin
+        5'b11000: begin // branch
            Branch <= 2'b01;
            MemRead <= 0;
            MemtoReg <= 1'bx;//don't care
-           ALUOp <= 4'b0001;
+           ALUOp <= 4'b0010;
            MemWrite <= 0;
            ALUsrc <= 0;
            RegWrite <= 0;
@@ -88,7 +88,7 @@ module control_unit(input [4:0]      Inst_6_2, //represet instruction[6:2]
            Branch <= 2'b10;
            MemRead <= 0;
            MemtoReg <= 1'bx;//don't care
-           ALUOp <= 4'b0000;
+           ALUOp <= 4'b0111;
            MemWrite <= 0;
            ALUsrc <= 1;
            RegWrite <= 1;
@@ -98,7 +98,7 @@ module control_unit(input [4:0]      Inst_6_2, //represet instruction[6:2]
            Branch <= 2'b11;
            MemRead <= 0;
            MemtoReg <= 1'bx;//don't care
-           ALUOp <= 4'b0000;
+           ALUOp <= 4'b1000;
            MemWrite <= 0;
            ALUsrc <= 1;
            RegWrite <= 1;
@@ -135,7 +135,7 @@ module control_unit(input [4:0]      Inst_6_2, //represet instruction[6:2]
            Branch <= 2'b00;
            MemRead <= 0;
            MemtoReg <= 1'bx;//don't care
-           ALUOp <= 4'b0001;
+           ALUOp <= 4'b0110;
            MemWrite <= 0;
            ALUsrc <= 0;
            RegWrite <= 1;
@@ -145,7 +145,7 @@ module control_unit(input [4:0]      Inst_6_2, //represet instruction[6:2]
            Branch <= 2'b00;
            MemRead <= 0;
            MemtoReg <= 1'bx;//don't care
-           ALUOp <= 4'b0000;
+           ALUOp <= 4'b0101;
            MemWrite <= 0;
            ALUsrc <= 1;
            RegWrite <= 1;
