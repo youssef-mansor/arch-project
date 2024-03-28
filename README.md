@@ -15,7 +15,7 @@
 <div align="center">
 
   <a href="https://github.com/youssef-mansor/RISC-V-Datapath-single-cycle-implementation">
-    <img src="https://https://drive.google.com/uc?export=download&id=1CVzAwM6j_l6mYgj2YUdFRfJVpm-zyjpu" alt="RISC-V Datapath" width="500">
+    <img src="https://drive.google.com/uc?export=download&id=1CVzAwM6j_l6mYgj2YUdFRfJVpm-zyjpu" alt="RISC-V Datapath" width="500">
   </a>
 
 <h3 align="center">RISC-V Datapath single cycle implementation</h3>
@@ -35,7 +35,7 @@
 
 ## About The Project
 
-The projects  builds up a datapath and constructs a simple version of a processor sufficient to implement a subset of  RISC-V32I instructions. The project is inspired by the textbook [Computer Organization and Design: The Hardware/software Interface" by David A Patterson and John L. Hennessy](https://www.google.com.eg/books/edition/Computer_Organization_and_Design_MIPS_Ed/o3bhDwAAQBAJ?hl=en&gbpv=0).
+The projects  builds up a datapath and constructs a simple version of a processor sufficient to implement most of  RISC-V32I instructions. The project is inspired by the textbook [Computer Organization and Design: The Hardware/software Interface" by David A Patterson and John L. Hennessy](https://www.google.com.eg/books/edition/Computer_Organization_and_Design_MIPS_Ed/o3bhDwAAQBAJ?hl=en&gbpv=0).
 
 > **Note**
 > This project is still under development and is not yet ready for deployment, but feel free to fork it and use it for your own purposes!
