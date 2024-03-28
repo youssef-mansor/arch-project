@@ -88,6 +88,12 @@ module N_bit_ALU #(parameter N = 32)(input [N-1:0]      A,
         4'b0000: ALU_output = AND_output;//
         4'b0001: ALU_output = OR_output;//
         4'b1000: ALU_output = A ^ B;//
+
+        //slt
+        4'b1001: ALU_output = {31'b0,(NegativeFlag != OverflowFlag)};//
+        //sltu
+        4'b1010: ALU_output = {31'b0, (~CarryFlag)};//
+
         default: ALU_output = 0;//
       endcase
    end
