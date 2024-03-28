@@ -87,6 +87,7 @@ module N_bit_ALU #(parameter N = 32)(input [N-1:0]      A,
         4'b0110: ALU_output = ripple_carry_adder_sum;//
         4'b0000: ALU_output = AND_output;//
         4'b0001: ALU_output = OR_output;//
+        4'b1000: ALU_output = A ^ B;//
         default: ALU_output = 0;//
       endcase
    end

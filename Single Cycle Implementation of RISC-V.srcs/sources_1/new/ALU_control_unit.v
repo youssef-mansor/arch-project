@@ -39,6 +39,7 @@ module ALU_control_unit(
                             3'b000:  ALU_selection = bit_30 ? 4'b0110 : 4'b0010;
                             3'b111:  ALU_selection = bit_30 ? 4'bxxxx : 4'b0000;
                             3'b110:  ALU_selection = bit_30 ? 4'bxxxx : 4'b0001;
+                            3'b100:  ALU_selection = bit_30 ? 4'bxxxx : 4'b1000;
                         endcase
                     end
              default: ALU_selection = 4'bxxxx;
