@@ -59,9 +59,9 @@ module N_bit_ALU #(parameter N = 32)(
     wire ripple_carry_adder_cout;
     wire [N-1:0] AND_output; //holds A & B
     wire [N-1:0] OR_output; //holds A | B
-    wire [N-1:0] SLL_output;
-    wire [N-1:0] SRL_output;
-    wire [N-1:0] SRA_output;
+    wire [N-1:0] SLL_output; //holds SLL or SLLI output
+    wire [N-1:0] SRL_output; //holds SRL or SRLI output
+    wire [N-1:0] SRA_output; //holds SRA or SRAI output
     wire [4:0] shift_amount = B[N-1:0] > N-1 ? N-1 : B[4:0];
     
     n_bit_2_x_1_MUX #(32) mux_B_or_not_B(.a(~B), .b(B), .s(sel[2]), .o(ALU_B_input)); //assign ALU_B_input

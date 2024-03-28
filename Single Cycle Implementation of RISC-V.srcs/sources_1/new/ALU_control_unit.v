@@ -29,16 +29,18 @@ module ALU_control_unit(
    always @(*) begin
          case(ALUOp)
              2'b00: begin
-                         ALU_selection = 4'b0010;
+                         ALU_selection = 4'b0010; //ADD
                     end
              2'b01: begin
-                         ALU_selection = 4'b0110;
+                         ALU_selection = 4'b0110; //SUB
                     end
              2'b10: begin
                         case (funct3)
-                            3'b000:  ALU_selection = bit_30 ? 4'b0110 : 4'b0010;
-                            3'b111:  ALU_selection = bit_30 ? 4'bxxxx : 4'b0000;
-                            3'b110:  ALU_selection = bit_30 ? 4'bxxxx : 4'b0001;
+                            3'b000:  ALU_selection = bit_30 ? 4'b0110 : 4'b0010; //ADD
+                            3'b111:  ALU_selection = bit_30 ? 4'bxxxx : 4'b0000; //AND
+                            3'b110:  ALU_selection = bit_30 ? 4'bxxxx : 4'b0001; //OR
+                            3'b001:  ALU_selection = bit_30 ? 4'bxxxx : 4'b0011; //shift left SLL, SLLI
+                            3'b101:  ALU_selection = bit_30 ? 4'b0101 : 4'b0111; //shift right SRL, SRLI, SRA                            
                         endcase
                     end
              default: ALU_selection = 4'bxxxx;

@@ -69,6 +69,15 @@ module control_unit(
                           ALUsrc <= 0;
                             RegWrite <= 0;
                         end//
+            5'b00000: begin
+                          Branch <= 0;
+                          MemRead <= 0;
+                          MemtoReg <= 0;//don't care
+                          ALUOp <= 2'b10;
+                          MemWrite <= 0;
+                          ALUsrc <= 1;
+                            RegWrite <= 1;
+                        end//
             default: ;//don't do anything
         endcase
     end
