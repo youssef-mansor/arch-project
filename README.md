@@ -43,16 +43,26 @@ The projects  builds up a datapath and constructs a simple version of a processo
 ## Technical Details
 
 ### Supported subset of the core RISC-V32I instruction set:
-<img src="https://drive.google.com/uc?export=download&id=19ed6VQ4XCn4rO2sM6Pnzr-0p87bh-qN1" alt="Subset of RISCV32I Instructions" width="500">
+[//]: <> (<img src="https://drive.google.com/uc?export=download&id=19ed6VQ4XCn4rO2sM6Pnzr-0p87bh-qN1" alt="Subset of RISCV32I Instructions" width="500">)
 
 - The memory-reference instructions:
   - Load doubleword (ld)
+  - lh
+  - lb
+  - lbu
+  - lhu
   - Store doubleword (sd)
 - The arithmetic-logical instructions:
   - Add
   - Subtract
   - Bitwise AND (and)
   - Bitwise OR (or)
+  - SRL
+  - SRLI
+  - SRA
+  - SRAI
+  - SLL
+  - SLLI
 - The conditional branch instruction:
   - Branch if equal (beq)
 #### Notes:
@@ -143,7 +153,8 @@ Note that all the above values are 32-bit values; however, we will only be displ
     );
     ```
   - **Function**: Create a module representing the control unit. The control unit is a combinational circuit with the following truth table (enough to support to the 7 instructions we are interested in)
-  - <img src="https://drive.google.com/uc?export=download&id=15UziXtJ3vu2N4pHhT0080myo7jOPkpp7" alt="Subset of RISCV32I Instructions" width="500">
+  - [//]: <> (<img src="https://drive.google.com/uc?export=download&id=15UziXtJ3vu2N4pHhT0080myo7jOPkpp7" alt="Subset of RISCV32I Instructions" width="500">)
+  - truth table to be added soon.
 - ALU_control_unit
   - ```
     module ALU_control_unit(
@@ -154,7 +165,8 @@ Note that all the above values are 32-bit values; however, we will only be displ
     );
     ```
   - ALU control unit using the following truth table
-  - <img src="https://drive.google.com/uc?export=download&id=1cKVgo20PKcfNSKJNBYAQpYn_xvmPHXMC" alt="Subset of RISCV32I Instructions" width="500">
+  - [//]: <> (<img src="https://drive.google.com/uc?export=download&id=1cKVgo20PKcfNSKJNBYAQpYn_xvmPHXMC" alt="Subset of RISCV32I Instructions" width="500">)
+  - truth table to be added soon.
 - n_bit_2_x_1_MUX
   - ```
     module n_bit_2_x_1_MUX #(N = 4)(//TODO potential error
