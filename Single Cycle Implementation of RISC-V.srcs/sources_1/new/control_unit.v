@@ -131,6 +131,26 @@ module control_unit(input [4:0]      Inst_6_2, //represet instruction[6:2]
                pc_halt <= 1;
             end
          end
+        5'b00101: begin // AUIPC
+           Branch <= 2'b00;
+           MemRead <= 0;
+           MemtoReg <= 1'bx;//don't care
+           ALUOp <= 4'b0001;
+           MemWrite <= 0;
+           ALUsrc <= 0;
+           RegWrite <= 1;
+           pc_halt <= 0;
+        end
+        5'b01101: begin // LUI
+           Branch <= 2'b00;
+           MemRead <= 0;
+           MemtoReg <= 1'bx;//don't care
+           ALUOp <= 4'b0000;
+           MemWrite <= 0;
+           ALUsrc <= 1;
+           RegWrite <= 1;
+           pc_halt <= 0;
+        end
         endcase
     end
     
