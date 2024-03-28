@@ -15,7 +15,7 @@
 <div align="center">
 
   <a href="https://github.com/youssef-mansor/RISC-V-Datapath-single-cycle-implementation">
-    <img src="https://drive.google.com/uc?export=download&id=1wGgrfm3xScgIi3ep1-Dd5cYMml5hcO3K" alt="RISC-V Datapath" width="500">
+    <img src="https://https://drive.google.com/uc?export=download&id=1CVzAwM6j_l6mYgj2YUdFRfJVpm-zyjpu" alt="RISC-V Datapath" width="500">
   </a>
 
 <h3 align="center">RISC-V Datapath single cycle implementation</h3>
