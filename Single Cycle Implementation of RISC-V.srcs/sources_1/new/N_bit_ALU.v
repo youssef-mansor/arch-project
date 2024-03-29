@@ -44,53 +44,43 @@
 //    output [N-1:0] o
 //    );
     
-module N_bit_ALU #(parameter N = 32)(
+module N_bit_ALU #(parameter N = 32)( //refactor later to delete some wires
     input [N-1:0] A,
     input [N-1:0] B,
     input [3:0] sel,
     output reg [N-1:0] ALU_output,
-    output ZeroFlag
+    output ZeroFlag,
+    output NegativeFlag,
+    output OverflowFlag,
+    output CarryFlag
     );
     
+    wire [31:0] add, sub, not_B;
+    assign not_B = (~B);
+    assign {CarryFlag, add} = sel[0]? (A + not_B + 1'b1): (A + B); //when sel[2] = 1 then operation is subtraction
+
     assign ZeroFlag = (ALU_output == 0);
-    
-    wire [N-1:0] ALU_B_input; //either holds B or ~B depending on sel[2]
-    wire [N-1:0] ripple_carry_adder_sum;
-    wire ripple_carry_adder_cout;
-    wire [N-1:0] AND_output; //holds A & B
-    wire [N-1:0] OR_output; //holds A | B
-    wire [N-1:0] SLL_output; //holds SLL or SLLI output
-    wire [N-1:0] SRL_output; //holds SRL or SRLI output
-    wire [N-1:0] SRA_output; //holds SRA or SRAI output
+    assign NegativeFlag = add[31]; //determines whether the ALU ouptu is negative
+    assign OverflowFlag = (A[31] ^ (not_B[31]) ^ add[31] ^ CarryFlag);
+            
+
     wire [4:0] shift_amount = B[N-1:0] > N-1 ? N-1 : B[4:0];
-    
-    n_bit_2_x_1_MUX #(32) mux_B_or_not_B(.a(~B), .b(B), .s(sel[2]), .o(ALU_B_input)); //assign ALU_B_input
-    
-    //instatniate N bit ripple carry adder
-    //TODO: potential erro
-    RippleCarryAdder #(32) ripple_carry_adder(.A(A),
-                                              .B(ALU_B_input),
-                                              .cin(sel[2]), //if sel[2] (subtraction) carryin = 1
-                                              .Sum(ripple_carry_adder_sum),
-                                              .cout(ripple_carry_adder_cout));
-    assign AND_output = A & B;
-    assign OR_output = A | B;
-    
-    assign SLL_output = A << shift_amount;
-    assign SRL_output = A >> shift_amount;
-    assign SRA_output = A >>> shift_amount; //TODO, not working properly
-   
-    
+              
    // MUX 16 * 1
    always @(*) begin
        case(sel)
-           4'b0010: ALU_output = ripple_carry_adder_sum;//
-           4'b0110: ALU_output = ripple_carry_adder_sum;//
-           4'b0000: ALU_output = AND_output;//
-           4'b0001: ALU_output = OR_output;//
-           4'b0011: ALU_output = SLL_output;
-           4'b0111: ALU_output = SRL_output;
-           4'b0101: ALU_output = SRA_output;
+           4'b0000: ALU_output = add;
+           4'b0001: ALU_output = add;
+           4'b0101: ALU_output = A & B;
+           4'b0100: ALU_output = A | B;
+           4'b0111: ALU_output = A ^ B;
+           
+           4'b1000: ALU_output = A << shift_amount;//holds SLL or SLLI output
+           4'b1001: ALU_output = A >> shift_amount;//holds SRL or SRLI output
+           4'b1010: ALU_output = A >>> shift_amount; //TODO not working properly, //holds SRA or SRAI output
+           
+           4'b1101: ALU_output = {31'b0,(NegativeFlag != OverflowFlag)}; //SLT: to be understood
+           4'b1111: ALU_output = {31'b0,(~CarryFlag)};
            default: ALU_output = 0;//
        endcase
    end

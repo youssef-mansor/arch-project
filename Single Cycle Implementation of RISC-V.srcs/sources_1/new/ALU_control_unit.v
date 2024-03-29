@@ -29,18 +29,21 @@ module ALU_control_unit(
    always @(*) begin
          case(ALUOp)
              2'b00: begin
-                         ALU_selection = 4'b0010; //ADD
+                         ALU_selection = 4'b0000; //ADD
                     end
              2'b01: begin
-                         ALU_selection = 4'b0110; //SUB
+                         ALU_selection = 4'b0001; //SUB
                     end
              2'b10: begin
                         case (funct3)
-                            3'b000:  ALU_selection = bit_30 ? 4'b0110 : 4'b0010; //ADD
-                            3'b111:  ALU_selection = bit_30 ? 4'bxxxx : 4'b0000; //AND
-                            3'b110:  ALU_selection = bit_30 ? 4'bxxxx : 4'b0001; //OR
-                            3'b001:  ALU_selection = bit_30 ? 4'bxxxx : 4'b0011; //shift left SLL, SLLI
-                            3'b101:  ALU_selection = bit_30 ? 4'b0101 : 4'b0111; //shift right SRL, SRLI, SRA                            
+                            3'b000:  ALU_selection = bit_30 ? 4'b0001 : 4'b0000; //ADD
+                            3'b111:  ALU_selection = bit_30 ? 4'bxxxx : 4'b0101; //AND
+                            3'b110:  ALU_selection = bit_30 ? 4'bxxxx : 4'b0100; //OR
+                            3'b001:  ALU_selection = bit_30 ? 4'b1001 : 4'b1000; //shift left SLL, SLLI
+                            3'b101:  ALU_selection = bit_30 ? 4'b1000 : 4'b1001; //shift right SRL, SRLI, SRA 
+                            3'b010:  ALU_selection = bit_30 ? 4'bxxxx : 4'b1101; //SLT    
+                            3'b011:  ALU_selection = bit_30 ? 4'bxxxx : 4'b1111; //SLTU   
+                            3'b100:  ALU_selection = bit_30 ? 4'bxxxx : 4'b0111; //XOR               
                         endcase
                     end
              default: ALU_selection = 4'bxxxx;
