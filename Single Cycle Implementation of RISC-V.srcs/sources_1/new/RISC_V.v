@@ -35,16 +35,21 @@ module RISC_V(
     wire [31:0] instruction;  
     wire [31:0] PC, PC_plus_4, branch_target, PC_input;
     wire zero_and_branch;
+    wire [1:0] PCSrc; //out of branch_control into mux_pc
 
     //Control Unit  
-    wire [1:0] ALUOp;
-    wire Branch, MemRead, MemtoReg, MemWrite, AlUSrc, RegWrite;
+    wire [3:0] ALUOp;
+    wire [1:0] branchOp;
+    wire MemRead, MemtoReg, MemWrite, AlUSrc, RegWrite;
     
     //ALU
     wire [3:0] ALU_sel;
     wire zeroFlag;
     wire [31:0] ALU_2nd_src_MUX_out;
     wire [31:0] ALU_output;
+    wire [31:0] NegativeFlag;
+    wire [31:0] OverflowFlag;
+    wire [31:0] CarryFlag;
     
     //Register File
     wire [31:0] read_data_1;
@@ -80,7 +85,7 @@ module RISC_V(
                      .read_reg_2_data(read_data_2));
     //control unit
     control_unit CU ( .Inst_6_2(instruction[6:2]),
-                      .Branch(Branch),
+                      .Branch(branchOp),
                       .MemRead(MemRead),
                       .MemtoReg(MemtoReg),
                       .ALUOp(ALUOp),
@@ -95,12 +100,16 @@ module RISC_V(
                                    .funct3(instruction[14:12]),
                                    .bit_30(instruction[30]),
                                    .ALU_selection(ALU_sel));
+  
    //ALU
      N_bit_ALU #(32) alu_inst (.A(read_data_1),
                                .B(ALU_2nd_src_MUX_out),
                                .sel(ALU_sel),
                                .ALU_output(ALU_output),
-                               .ZeroFlag(zeroFlag));
+                               .ZeroFlag(zeroFlag),
+                               .NegativeFlag(NegativeFlag),
+                               .OverflowFlag(OverflowFlag),
+                               .CarryFlag(CarryFlag));
    //MUX for ALU 2nd source
    n_bit_2_x_1_MUX  ALU_2nd_src( .a(ImmGen_output), //when ALUSrc
                                 .b(read_data_2),
@@ -128,11 +137,28 @@ module RISC_V(
    assign branch_target = shift_left_1_out + PC;
    //Adder for PC
    assign PC_plus_4 = PC + 4; 
+   
    //MUX for PC input 
-   n_bit_2_x_1_MUX mux_pc(.a(branch_target),
-                          .b(PC_plus_4),
-                          .s(zeroFlag & Branch),//TODO potential error
-                          .o(PC_input));
+//   n_bit_2_x_1_MUX mux_pc(.a(branch_target),
+//                          .b(PC_plus_4),
+//                          .s(zeroFlag & Branch),//TODO potential error
+//                          .o(PC_input));
+
+
+    branch_control bc(.branchOp(branchOp),
+                    .funct3(instruction[14:12]),
+                    .zf(zeroFlag),
+                    .cf(CarryFlag),
+                    .sf(NegativeFlag),
+                    .vf(OverflowFlag),
+                    .PCSrc(PCSrc));
+                    
+    MUX_4x1 mux_pc(.a(PC_plus_4), //sel = 2'b00
+                    .b(branch_target), //sel = 2'b01
+                    .c(ALU_output), //sel 2'b10 for jalr but TODO
+                    .d(32'bx), //sel 2'b11
+                    .sel(PCSrc),
+                    .out(PC_input));
           
    //RISC-V input output
    always @(*) begin
@@ -141,7 +167,7 @@ module RISC_V(
        else if (ledSel == 2'b01)
            LEDs = instruction [31:16];
        else if (ledSel == 2'b10)
-           LEDs = {8'b00000000, ALUOp, ALU_sel, zeroFlag, zeroFlag & Branch};
+           LEDs = {8'b00000000, ALUOp, ALU_sel, zeroFlag, PCSrc};
        else
            LEDs = 0;
        end    

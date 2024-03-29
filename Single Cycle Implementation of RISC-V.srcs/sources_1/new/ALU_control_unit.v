@@ -18,35 +18,80 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
+`include "defines.v"
 
-
-module ALU_control_unit(
-    input [1:0] ALUOp,
-    input [2:0] funct3, //instruction[14:12]
-    input bit_30,
-    output reg [3:0] ALU_selection
-    );
-   always @(*) begin
-         case(ALUOp)
-             2'b00: begin
-                         ALU_selection = 4'b0000; //ADD
-                    end
-             2'b01: begin
-                         ALU_selection = 4'b0001; //SUB
-                    end
-             2'b10: begin
-                        case (funct3)
-                            3'b000:  ALU_selection = bit_30 ? 4'b0001 : 4'b0000; //ADD
-                            3'b111:  ALU_selection = bit_30 ? 4'bxxxx : 4'b0101; //AND
-                            3'b110:  ALU_selection = bit_30 ? 4'bxxxx : 4'b0100; //OR
-                            3'b001:  ALU_selection = bit_30 ? 4'b1001 : 4'b1000; //shift left SLL, SLLI
-                            3'b101:  ALU_selection = bit_30 ? 4'b1000 : 4'b1001; //shift right SRL, SRLI, SRA 
-                            3'b010:  ALU_selection = bit_30 ? 4'bxxxx : 4'b1101; //SLT    
-                            3'b011:  ALU_selection = bit_30 ? 4'bxxxx : 4'b1111; //SLTU   
-                            3'b100:  ALU_selection = bit_30 ? 4'bxxxx : 4'b0111; //XOR               
-                        endcase
-                    end
-             default: ALU_selection = 4'bxxxx;
+    
+module ALU_control_unit(input [3:0] ALUOp, 
+                        input [2:0] funct3, 
+                        input bit_30, 
+                        output reg [3:0] ALU_selection);
+    always @(*) begin
+    if(ALUOp == 4'b0000) //R-Format instructions.
+      begin
+        case(funct3)
+          `F3_OR: ALU_selection = `ALU_OR;
+          `F3_AND: ALU_selection = `ALU_AND;
+          `F3_XOR: ALU_selection = `ALU_XOR;
+          `F3_ADD: 
+            begin
+              if(bit_30 == 0)
+                ALU_selection = `ALU_ADD;
+              else
+                ALU_selection = `ALU_SUB;
+            end
+          `F3_SLT: ALU_selection = `ALU_SLT;
+          `F3_SLL: ALU_selection = `ALU_SLL;
+          `F3_SLTU: ALU_selection = `ALU_SLTU;
+          `F3_SRL: 
+            begin
+              if(bit_30 == 0)
+                ALU_selection = `ALU_SRL;
+              else
+                ALU_selection = `ALU_SRA;
+            end
         endcase
-     end
+      end
+    else if(ALUOp == 4'b0001) //I-Format Instructions
+      begin
+        case(funct3)
+          `F3_ADD: ALU_selection = `ALU_ADD;
+          `F3_OR: ALU_selection = `ALU_OR;
+          `F3_AND: ALU_selection = `ALU_AND;
+          `F3_XOR: ALU_selection = `ALU_XOR;
+          `F3_SLT: ALU_selection = `ALU_SLT;
+          `F3_SLTU: ALU_selection = `ALU_SLTU;
+          `F3_SLL: ALU_selection = `ALU_SLL;
+          `F3_SRL: 
+            begin
+              if(bit_30 == 0)
+                ALU_selection = `ALU_SRL;
+              else
+                ALU_selection = `ALU_SRA;
+            end
+        endcase
+      end
+//    else if (ALUOp==4'b1001)
+//      begin
+//        case(funct3)
+//          `F3_MUL: ALU_selection = `ALU_MUL;
+//          `F3_DIV: ALU_selection = `ALU_DIV;
+//          `F3_REM: ALU_selection = `ALU_REM;
+//          endcase
+//      end
+    else if(ALUOp == 4'b0010) //Branching
+      ALU_selection = `ALU_SUB;
+    else if(ALUOp == 4'b0011) //Load
+      ALU_selection = `ALU_ADD;
+    else if(ALUOp == 4'b0100) //Store
+      ALU_selection = `ALU_ADD;
+    end
+//    //else if(ALUOp == 4'b0111) //AUIPC
+//      //ALU_selection = `ALU_LUI_AUIPC;
+//    else if(ALUOp == 4'b1000) //LUI
+//      ALU_selection = `ALU_LUI;
+//    else if(ALUOp == 4'b0101) //JALR
+//      ALU_selection = `ALU_ADD;
+//    //else if(ALUOp == 4'b0110) //JAL
+//      //ALU_selection = `ALU_ADD;
+//    end
 endmodule
