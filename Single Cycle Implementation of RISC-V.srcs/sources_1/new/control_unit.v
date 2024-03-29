@@ -33,51 +33,61 @@ module control_unit(
     
    always @(*) begin
         case(Inst_6_2)
-            5'b01100: begin
-                           Branch = 0;
-                           MemRead <= 0;
-                           MemtoReg <= 0;
-                           ALUOp = 2'b10;
-                           MemWrite <= 0;
-                           ALUsrc <= 0;
-                          RegWrite <= 1;
+            5'b01100: begin //R
+               Branch = 0;
+               MemRead <= 0;
+               MemtoReg <= 0;
+               ALUOp = 2'b10;
+               MemWrite <= 0;
+               ALUsrc <= 0;
+               RegWrite <= 1;
                       end
-            5'b00000:begin
-                          Branch <= 0;
-                          MemRead <= 1;
-                          MemtoReg <= 1;
-                          ALUOp <= 2'b00;
-                          MemWrite <= 0;
-                          ALUsrc <= 1;
-                         RegWrite <= 1;
+            5'b00000:begin //I loading instructions
+                  Branch <= 0;
+                  MemRead <= 1;
+                  MemtoReg <= 1;
+                  ALUOp <= 2'b00;
+                  MemWrite <= 0;
+                  ALUsrc <= 1;
+                 RegWrite <= 1;
                      end//
-            5'b01000: begin
-                          Branch <= 0;
-                          MemRead <= 0;
-                          MemtoReg <= 1'bx;//don't care
-                          ALUOp <= 2'b00;
-                          MemWrite <= 1;
-                          ALUsrc <= 1;
-                         RegWrite <= 0;
+            5'b00100: begin //I arithmatic and logical instructions with immediates
+                Branch <= 0;
+                MemRead <= 0;
+                MemtoReg <= 0;
+                ALUOp <= 2'b10;
+                MemWrite <= 0;
+                ALUsrc <= 1;
+                RegWrite <= 1;  
+                end
+            5'b01000: begin //S
+                  Branch <= 0;
+                  MemRead <= 0;
+                  MemtoReg <= 1'bx;//don't care
+                  ALUOp <= 2'b00;
+                  MemWrite <= 1;
+                  ALUsrc <= 1;
+                 RegWrite <= 0;
                      end//
-            5'b11000: begin
-                          Branch <= 1;
-                          MemRead <= 0;
-                          MemtoReg <= 1'bx;//don't care
-                          ALUOp <= 2'b01;
-                          MemWrite <= 0;
-                          ALUsrc <= 0;
-                            RegWrite <= 0;
+            5'b11000: begin //B
+                  Branch <= 1;
+                  MemRead <= 0;
+                  MemtoReg <= 1'bx;//don't care
+                  ALUOp <= 2'b01;
+                  MemWrite <= 0;
+                  ALUsrc <= 0;
+                    RegWrite <= 0;
                         end//
-            5'b00000: begin
-                          Branch <= 0;
-                          MemRead <= 0;
-                          MemtoReg <= 0;//don't care
-                          ALUOp <= 2'b10;
-                          MemWrite <= 0;
-                          ALUsrc <= 1;
-                            RegWrite <= 1;
-                        end//
+           
+//            5'b00000: begin
+//                          Branch <= 0;
+//                          MemRead <= 0;
+//                          MemtoReg <= 0;//don't care
+//                          ALUOp <= 2'b10;
+//                          MemWrite <= 0;
+//                          ALUsrc <= 1;
+//                            RegWrite <= 1;
+//                        end//
             default: ;//don't do anything
         endcase
     end
