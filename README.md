@@ -15,7 +15,7 @@
 <div align="center">
 
   <a href="https://github.com/youssef-mansor/RISC-V-Datapath-single-cycle-implementation">
-    <img src="https://drive.google.com/uc?export=download&id=1CVzAwM6j_l6mYgj2YUdFRfJVpm-zyjpu" alt="RISC-V Datapath" width="500">
+    <img src="https://drive.google.com/uc?export=download&id=1Zp9PboxHoKLLIO8KKCrQIaSSkZ3x_a01" alt="RISC-V Datapath" width="500">
   </a>
 
 <h3 align="center">RISC-V Datapath single cycle implementation</h3>
@@ -43,28 +43,8 @@ The projects  builds up a datapath and constructs a simple version of a processo
 ## Technical Details
 
 ### Supported subset of the core RISC-V32I instruction set:
-[//]: <> (<img src="https://drive.google.com/uc?export=download&id=19ed6VQ4XCn4rO2sM6Pnzr-0p87bh-qN1" alt="Subset of RISCV32I Instructions" width="500">)
+<img src="https://drive.google.com/uc?export=download&id=19kXwGxpmvvPZfc_-EWPYvXpKguXLI3-f" alt="Subset of RISCV32I Instructions" width="500">
 
-- The memory-reference instructions:
-  - Load doubleword (ld)
-  - lh
-  - lb
-  - lbu
-  - lhu
-  - Store doubleword (sd)
-- The arithmetic-logical instructions:
-  - Add
-  - Subtract
-  - Bitwise AND (and)
-  - Bitwise OR (or)
-  - SRL
-  - SRLI
-  - SRA
-  - SRAI
-  - SLL
-  - SLLI
-- The conditional branch instruction:
-  - Branch if equal (beq)
 #### Notes:
 - For our subset, the 7-bit opcode field is enough to decode the instruction except for RFormat instructions (ADD, SUB, AND, OR) which all have the same value (0110011) for
 that field. For R-Format instructions, the actual operation is determined by the funct3 and
@@ -113,18 +93,21 @@ Note that all the above values are 32-bit values; however, we will only be displ
     module ImmGen (output reg [31:0] gen_out,
                input [31:0] inst);
     ```
-  - **Function**: Generate the appropriate immediate value for (BEQ, SW, LW) based on the opcode
+  - **Function**: Generate the appropriate immediate value for instruction based on the opcode
 - N_bit_ALU
   - ```
-    module N_bit_ALU #(parameter N = 32)(
-      input [N-1:0] A,
-      input [N-1:0] B,
-      input [3:0] sel,
-      output reg [N-1:0] ALU_output,
-      output ZeroFlag
-      );
+    module N_bit_ALU #(parameter N = 32)( //refactor later to delete some wires
+    input [N-1:0] A,
+    input [N-1:0] B,
+    input [3:0] sel,
+    output reg [N-1:0] ALU_output,
+    output ZeroFlag,
+    output NegativeFlag,
+    output OverflowFlag,
+    output CarryFlag
+    );
     ```
-  - **Function**: Executes arithmatic operations, although selection lines allow up to 16 different arithmetic and logic oeprations I only implemented 4 operations (addition, subtraction, ANDing, and ORing) while the remaining 12 operations will produce zero output regardless the input. The selections line for adding, subtraction, ANDing, and ORing is 0010, 0110, 0000, and 0001 respectively.
+  - **Function**: Executes arithmatic operations, although selection lines allow up to 16 different arithmetic and logic oepration.
 - Register_file
   - ```
     module Register_file(
@@ -141,12 +124,12 @@ Note that all the above values are 32-bit values; however, we will only be displ
     ```
 - control_unit
   - ```
-          module control_unit(
+    module control_unit(
     input [4:0] Inst_6_2, //represet instruction[6:2]
-    output reg Branch,
+    output reg [1:0] Branch,
     output reg MemRead,
     output reg MemtoReg,
-    output reg [1:0] ALUOp,
+    output reg [3:0] ALUOp,
     output reg MemWrite,
     output reg ALUsrc,
     output reg RegWrite
@@ -176,6 +159,18 @@ Note that all the above values are 32-bit values; however, we will only be displ
     output [N-1:0] o
     );
     ```
+- branch_control
+  - ```
+    module branch_control(
+    input [1:0] branchOp, 
+    input [2:0] funct3, 
+    input zf, 
+    input cf, 
+    input sf, 
+    input vf, 
+    output reg [1:0] PCSrc);
+    ```
+  - **Function**: Determines the source of PC whether (PC + 4, branch address target, ALU_output). Uses PCSrc as selection line for a 4x1MUX.
 
 #### Memory Components
 - InstMem
