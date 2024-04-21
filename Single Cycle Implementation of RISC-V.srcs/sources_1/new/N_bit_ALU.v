@@ -45,14 +45,15 @@
 //    );
     
 module N_bit_ALU #(parameter N = 32)( //refactor later to delete some wires
-    input [N-1:0] A,
-    input [N-1:0] B,
-    input [3:0] sel,
+    input [N-1:0]      A,
+    input [N-1:0]      B,
+    input [3:0]        sel,
+    input [4:0]        shift_amount,
     output reg [N-1:0] ALU_output,
-    output ZeroFlag,
-    output NegativeFlag,
-    output OverflowFlag,
-    output CarryFlag
+    output             ZeroFlag,
+    output             NegativeFlag,
+    output             OverflowFlag,
+    output             CarryFlag
     );
     
     wire [31:0] add, sub, not_B;
@@ -63,9 +64,6 @@ module N_bit_ALU #(parameter N = 32)( //refactor later to delete some wires
     assign NegativeFlag = add[31]; //determines whether the ALU ouptu is negative
     assign OverflowFlag = (A[31] ^ (not_B[31]) ^ add[31] ^ CarryFlag);
             
-
-    wire [4:0] shift_amount = B[N-1:0] > N-1 ? N-1 : B[4:0];
-              
    // MUX 16 * 1
    always @(*) begin
        case(sel)

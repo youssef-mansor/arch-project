@@ -62,7 +62,21 @@ module RISC_V(
     
     //Data Memory
     wire [31:0] read_data_mem;
-    
+
+
+    // IF/ID pipeline registers
+    wire [10:0] Ctrl_Signals;
+    wire [31:0] IF_ID_PC, IF_ID_Inst, IF_ID_PcPlusFour;
+
+    // ID/EX pipeline registers
+    wire [31:0] ID_EX_PC,ID_EX_PcPlusFour , ID_EX_Imm;
+    wire [10:0] ID_EX_Ctrl;
+    wire [2:0] ID_EX_Func3;
+    wire [4:0] ID_EX_Rd, ID_EX_RegR1, ID_EX_RegR2, ID_EX_Shamt;
+    wire [31:0] ID_EX_RegisterRs1, ID_EX_RegisterRs2;
+    wire        ID_EX_bit30;
+
+
     //Instantiating Modules
     //Instantiate Program counter
     N_bit_register program_counter(.load(1'b1),
@@ -73,18 +87,22 @@ module RISC_V(
     //instruction memory
     InstMem IM(.addr(PC[5:0]/4), 
                .data_out(instruction));
+
+    N_bit_register #(200) IF_ID(.clk(~clk),.rst(rst),.load(1'b1),.D({PC_plus_4,PC,instruction}),.Q({IF_ID_PcPlusFour,IF_ID_PC,IF_ID_Inst}));
+
+
     //register file
     Register_file RF(.clk(clk),
                      .rst(rst),
-                     .read_reg_1_indx(instruction[19:15]),
-                     .read_reg_2_indx(instruction[24:20]),
+                     .read_reg_1_indx(IF_ID_Inst[19:15]),
+                     .read_reg_2_indx(IF_ID_Inst[24:20]),
                      .write_reg_indx(instruction[11:7]),
                      .write_data(write_data),
                      .reg_write(RegWrite),
                      .read_reg_1_data(read_data_1),
                      .read_reg_2_data(read_data_2));
     //control unit
-    control_unit CU ( .Inst_6_2(instruction[6:2]),
+    control_unit CU ( .Inst_6_2(IF_ID_Inst[6:2]),
                       .Branch(branchOp),
                       .MemRead(MemRead),
                       .MemtoReg(MemtoReg),
@@ -94,25 +112,39 @@ module RISC_V(
                       .RegWrite(RegWrite));
     //Immediate generator
     ImmGen immediate_generator (.gen_out(ImmGen_output), 
-                                .inst(instruction));
+                                .inst(IF_ID_Inst));
+
+    n_bit_2_x_1_MUX #(11) Control_mux(.a({ALUOp,MemRead,MemWrite,RegWrite,ALUSrc,MemToReg,branchOp}),.b(11'd0),.sel(PCSrc[0]|PCSrc[1]),.out(Ctrl_Signals));
+
+    N_bit_register #(398) ID_EX(
+         .clk(~clk),
+         .rst(rst),
+         .load(1'b1),
+         .D({Ctrl_Signals,IF_ID_PcPlusFour,IF_ID_PC,read_data_1,read_data_2,imm_out,IF_ID_Inst[14:12],IF_ID_Inst[19:15],IF_ID_Inst[24:20],IF_ID_Inst[11:7],IF_ID_Inst[30],IF_ID_Inst[24:20]}),
+         .Q({ID_EX_Ctrl,ID_EX_PcPlusFour,ID_EX_PC,ID_EX_RegisterRs1,ID_EX_RegisterRs2,ID_EX_Imm,ID_EX_Func3,ID_EX_RegR1,ID_EX_RegR2,ID_EX_Rd,ID_EX_bit30,ID_EX_Shamt}));
+      );
+
+
+
    //ALU Control
      ALU_control_unit alu_control (.ALUOp(ALUOp),
-                                   .funct3(instruction[14:12]),
-                                   .bit_30(instruction[30]),
+                                   .funct3(ID_EX_Func3),
+                                   .bit_30(ID_EX_bit30),
                                    .ALU_selection(ALU_sel));
   
    //ALU
-     N_bit_ALU #(32) alu_inst (.A(read_data_1),
+     N_bit_ALU #(32) alu_inst (.A(ID_EX_RegisterRs1),
                                .B(ALU_2nd_src_MUX_out),
                                .sel(ALU_sel),
+                               .shift_amount(ID_EX_Shamt),
                                .ALU_output(ALU_output),
                                .ZeroFlag(zeroFlag),
                                .NegativeFlag(NegativeFlag),
                                .OverflowFlag(OverflowFlag),
                                .CarryFlag(CarryFlag));
    //MUX for ALU 2nd source
-   n_bit_2_x_1_MUX  ALU_2nd_src( .a(ImmGen_output), //when ALUSrc
-                                .b(read_data_2),
+   n_bit_2_x_1_MUX  ALU_2nd_src(.a(ImmGen_output), //when ALUSrc
+                                .b(ID_EX_RegisterRs2),
                                 .s(ALUSrc),
                                 .o(ALU_2nd_src_MUX_out));
    //Data Memory
@@ -146,7 +178,7 @@ module RISC_V(
 
 
     branch_control bc(.branchOp(branchOp),
-                    .funct3(instruction[14:12]),
+                    .funct3(ID_EX_Func3),
                     .zf(zeroFlag),
                     .cf(CarryFlag),
                     .sf(NegativeFlag),
