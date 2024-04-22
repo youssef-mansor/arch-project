@@ -14,9 +14,8 @@
 <br />
 <div align="center">
 
-  <a href="https://github.com/youssef-mansor/RISC-V-Datapath-single-cycle-implementation">
-    <img src="https://drive.google.com/uc?export=download&id=1Zp9PboxHoKLLIO8KKCrQIaSSkZ3x_a01" alt="RISC-V Datapath" width="500">
-  </a>
+![Image](images/RISC-V-Processor-pipelined-datapth-with-33-instructions.drawio.png)
+
 
 <h3 align="center">RISC-V Datapath single cycle implementation</h3>
 
