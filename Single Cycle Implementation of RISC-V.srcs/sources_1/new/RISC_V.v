@@ -69,12 +69,24 @@ module RISC_V(
     wire [31:0] IF_ID_PC, IF_ID_Inst, IF_ID_PcPlusFour;
 
     // ID/EX pipeline registers
-    wire [31:0] ID_EX_PC,ID_EX_PcPlusFour , ID_EX_Imm;
+    wire [31:0] ID_EX_PC, ID_EX_PcPlusFour, ID_EX_Imm;
     wire [10:0] ID_EX_Ctrl;
     wire [2:0] ID_EX_Func3;
     wire [4:0] ID_EX_Rd, ID_EX_RegR1, ID_EX_RegR2, ID_EX_Shamt;
     wire [31:0] ID_EX_RegisterRs1, ID_EX_RegisterRs2;
     wire        ID_EX_bit30;
+
+
+    // EX/MEM pipeline registers
+    wire [31:0]  EX_MEM_PC_add_imm, EX_MEM_PC_plus_4, EX_MEM_ALU_output, EX_MEM_ALU_Input_2;
+    wire [5:0]  EX_MEM_Ctrl;
+    wire [4:0]  EX_MEM_RegRd;
+    wire [2:0]   EX_MEM_Func3;
+
+    // MEM/WB pipeline registers
+    wire [31:0]   MEM_WB_ALU_output, MEM_WB_PC_plus_4, MEM_WB_PC_add_imm, MEM_WB_MemData;
+    wire [3:0]    MEM_WB_Ctrl;
+    wire [4:0]    MEM_WB_RegRd;
 
 
     //Instantiating Modules
@@ -96,9 +108,9 @@ module RISC_V(
                      .rst(rst),
                      .read_reg_1_indx(IF_ID_Inst[19:15]),
                      .read_reg_2_indx(IF_ID_Inst[24:20]),
-                     .write_reg_indx(instruction[11:7]),
+                     .write_reg_indx(MEM_WB_RegRd),
                      .write_data(write_data),
-                     .reg_write(RegWrite),
+                     .reg_write(MEM_WB_Ctrl[3]),
                      .read_reg_1_data(read_data_1),
                      .read_reg_2_data(read_data_2));
     //control unit
@@ -121,9 +133,8 @@ module RISC_V(
          .rst(rst),
          .load(1'b1),
          .D({Ctrl_Signals,IF_ID_PcPlusFour,IF_ID_PC,read_data_1,read_data_2,imm_out,IF_ID_Inst[14:12],IF_ID_Inst[19:15],IF_ID_Inst[24:20],IF_ID_Inst[11:7],IF_ID_Inst[30],IF_ID_Inst[24:20]}),
-         .Q({ID_EX_Ctrl,ID_EX_PcPlusFour,ID_EX_PC,ID_EX_RegisterRs1,ID_EX_RegisterRs2,ID_EX_Imm,ID_EX_Func3,ID_EX_RegR1,ID_EX_RegR2,ID_EX_Rd,ID_EX_bit30,ID_EX_Shamt}));
+         .Q({ID_EX_Ctrl,ID_EX_PcPlusFour,ID_EX_PC,ID_EX_RegisterRs1,ID_EX_RegisterRs2,ID_EX_Imm,ID_EX_Func3,ID_EX_RegR1,ID_EX_RegR2,ID_EX_Rd,ID_EX_bit30,ID_EX_Shamt})
       );
-
 
 
    //ALU Control
@@ -147,20 +158,35 @@ module RISC_V(
                                 .b(ID_EX_RegisterRs2),
                                 .s(ALUSrc),
                                 .o(ALU_2nd_src_MUX_out));
+
+
+   N_bit_register  #(300) EX_MEM(.clk(~clk),.rst(rst),.load(1'b1),
+     .D({ID_EX_Ctrl[8:6],ID_EX_Ctrl[4:2],ID_EX_PcPlusFour,branch_target,ALU_output,ID_EX_RegisterRs2,ID_EX_Func3,ID_EX_Rd}),
+     .Q({EX_MEM_Ctrl,EX_MEM_PC_plus_4,EX_MEM_PC_add_imm,EX_MEM_ALU_output,EX_MEM_ALU_Input_2,EX_MEM_Func3,EX_MEM_RegRd}));
+
+
    //Data Memory
+   // TODO: make it dual memory
    DataMem data_memory (
        .clk(clk),
-       .MemRead(MemRead),
-       .MemWrite(MemWrite),
-       .addr(ALU_output[7:0]), // no longer divide by 4 but check for funct3 to better understand what to return.
-       .data_in(read_data_2),
-       .funct3(instruction[14:12]),
+       .MemRead(EX_MEM_Ctrl[5]),
+       .MemWrite(EX_MEM_Ctrl[4]),
+       .addr(ALU_output[7:0]),
+       .data_in(EX_MEM_ALU_Input_2),
+       .funct3(EX_MEM_Func3),
        .data_out(read_data_mem)
    );
+
+
+   N_bit_register  #(300) MEM_WB(.clk(clk),.rst(rst),.load(1'b1),
+     .D({EX_MEM_Ctrl[3:0],EX_MEM_PC_plus_4,EX_MEM_PC_add_imm,EX_MEM_ALU_output,read_data_mem,EX_MEM_RegRd}),
+     .Q({MEM_WB_Ctrl,MEM_WB_PC_plus_4,MEM_WB_PC_add_imm,MEM_WB_ALU_output,MEM_WB_MemData,MEM_WB_RegRd}));
+
+
    //MUX for Data Memory output
-   n_bit_2_x_1_MUX RF_write_data(.a(read_data_mem),
-                                 .b(ALU_output),
-                                 .s(MemtoReg),
+   n_bit_2_x_1_MUX RF_write_data(.a(MEM_WB_ALU_output),
+                                 .b(MEM_WB_MemData),
+                                 .s(MEM_WB_Ctrl[2]),
                                  .o(write_data));
    //shift left
    n_bit_shift_left SL( .D(ImmGen_output),
@@ -186,8 +212,8 @@ module RISC_V(
                     .PCSrc(PCSrc));
                     
     MUX_4x1 mux_pc(.a(PC_plus_4), //sel = 2'b00
-                    .b(branch_target), //sel = 2'b01
-                    .c(ALU_output), //sel 2'b10 for jalr but TODO
+                    .b(EX_MEM_PC_add_imm), //sel = 2'b01
+                    .c(EX_MEM_ALU_output), //sel 2'b10 for jalr but TODO
                     .d(32'bx), //sel 2'b11
                     .sel(PCSrc),
                     .out(PC_input));
