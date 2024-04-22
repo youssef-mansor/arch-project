@@ -33,7 +33,11 @@ module RISC_V_piplined(
     wire [31:0] NegativeFlag;
     wire [31:0] OverflowFlag;
     wire [31:0] CarryFlag;
-    
+    wire [1:0] ForwardA;
+    wire [1:0] ForwardB;
+    wire [31:0] ALU_first_input;
+    wire [31:0] ALU_register_second_input;
+        
     //Register File
     wire [31:0] read_data_1;
     wire [31:0] read_data_2;
@@ -148,7 +152,7 @@ module RISC_V_piplined(
                                    .ALU_selection(ALU_sel));
   
    //ALU
-     N_bit_ALU #(32) alu_inst (.A(ID_EX_RegR1),
+     N_bit_ALU #(32) alu_inst (.A(ALU_first_input),
                                .B(ALU_2nd_src_MUX_out),
                                .sel(ALU_sel),
                                .ALU_output(ALU_output),
@@ -158,11 +162,43 @@ module RISC_V_piplined(
                                .CarryFlag(CarryFlag));
    //MUX for ALU 2nd source
    n_bit_2_x_1_MUX  ALU_2nd_src( .a(ID_EX_Imm), //when ALUSrc
-                                .b(ID_EX_RegR2),
+                                .b(ALU_register_second_input),
                                 .s(ID_EX_Ctrl[10]),
                                 .o(ALU_2nd_src_MUX_out));
+                                
+    //Forwarding Unit
+    Forwarding_unit forwarding_unit(
+                                 .ID_EX_RegisterRs1(ID_EX_Rs1),
+                                 .ID_EX_RegisterRs2(ID_EX_Rs2),
+                                 .EX_MEM_RegisterRd(EX_MEM_Rd),
+                                 .MEM_WB_RegisterRd(MEM_WB_Rd),
+                                 .EX_MEM_RegWrite(EX_MEM_Ctrl[0]),
+                                 .MEM_WB_RegWrite(MEM_WB_Ctrl[0]),
+                                 .ForwardA(ForwardA),
+                                 .ForwardB(ForwardB)
+    );
+    
+   //MUX for ForwardA
+   nbit_4to1_mux #(32) MUX_ForwardA(
+                                 .in0(ID_EX_RegR1), //chosen sel = 00 normal case no forwarding
+                                 .in1(write_data), //chosen sel = 01
+                                 .in2(EX_MEM_ALU_out), //chosen sel = 10
+                                 .in3(), //chosen sel = 11
+                                 .sel(ForwardA),
+                                 .out(ALU_first_input)
+    );                  
+    
+   //MUX for ForwardB
+    nbit_4to1_mux #(32) MUX_ForwardB(
+                                 .in0(ID_EX_RegR2), //chosen sel = 00 normal case no forwarding
+                                 .in1(write_data), //chosen sel = 01
+                                 .in2(EX_MEM_ALU_out), //chosen sel = 10
+                                 .in3(), //chosen sel = 11
+                                 .sel(ForwardB),
+                                 .out(ALU_register_second_input)
+    );                  
     //shift left
-     n_bit_shift_left SL( .D(ID_EX_Imm),
+    n_bit_shift_left SL( .D(ID_EX_Imm),
                           .Q(shift_left_1_out));
      //Adder for immediate
      assign branch_target = shift_left_1_out + ID_EX_PC;
