@@ -34,12 +34,15 @@ module DataMem(
     
     //initialize the data memory
     initial begin
+//initialization from lab 7
 //        mem[0] = 32'd17;
 //        mem[1] = 32'd9;
 //        mem[2] = 32'd25;
-//          {mem[3], mem[2], mem[1], mem[0]} = 32'd17;
-//          {mem[7], mem[6], mem[5], mem[4]} = 32'd9;
-//          {mem[11], mem[10], mem[9], mem[8]} = 32'd15;
+        {mem[3], mem[2], mem[1], mem[0]} = 32'd17;
+        {mem[7], mem[6], mem[5], mem[4]} = 32'd9;
+        {mem[11], mem[10], mem[9], mem[8]} = 32'd25;
+
+
 //          {mem[3], mem[2], mem[1], mem[0]} = 32'h12345678;
 //          {mem[7], mem[6], mem[5], mem[4]} = 32'h87654321;
 //          {mem[11], mem[10], mem[9], mem[8]} = 32'hFFFFFFFF;

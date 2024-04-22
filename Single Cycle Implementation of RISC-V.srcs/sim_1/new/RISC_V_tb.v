@@ -25,12 +25,12 @@ module RISC_V_tb;
 // Inputs
 reg clk;
 reg rst;
-reg [1:0] ledSel;
-reg [3:0] ssdSel;
+//reg [1:0] ledSel;
+//reg [3:0] ssdSel;
 
-// Outputs
-wire [15:0] LEDs;
-wire [12:0] ssd;
+//// Outputs
+//wire [15:0] LEDs;
+//wire [12:0] ssd;
 
 // Clock generation
 always #50 clk = ~clk; // 50MHz Clock
@@ -38,11 +38,11 @@ always #50 clk = ~clk; // 50MHz Clock
 // Instantiate the Unit Under Test (UUT)
 RISC_V uut (
     .clk(clk), 
-    .rst(rst), 
-    .ledSel(ledSel), 
-    .ssdSel(ssdSel), 
-    .LEDs(LEDs), 
-    .ssd(ssd)
+    .rst(rst) 
+//    .ledSel(ledSel), 
+//    .ssdSel(ssdSel), 
+//    .LEDs(LEDs), 
+//    .ssd(ssd)
 );
 
 //block for testing using scopes and objects only
@@ -50,8 +50,6 @@ initial begin
         // Initialize Inputs
     clk = 1;
     rst = 1;
-    ledSel = 0;
-    ssdSel = 0;
     #100
     rst = 0;
 end

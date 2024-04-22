@@ -22,11 +22,11 @@
 
 module RISC_V(
     input  clk, //connected to a push button
-    input rst,  //connected to a push button (initialize pc and RF to zeros)
-    input [1:0] ledSel,// Select infomration displayed on leds (instructions, control signals)
-    input [3:0] ssdSel,// Select info displayed on SSD (PC, rs1, rs2, imm, etc..) //connected to pin E3
-    output reg [15:0] LEDs,
-    output reg [12:0] ssd
+    input rst  //connected to a push button (initialize pc and RF to zeros)
+//    input [1:0] ledSel,// Select infomration displayed on leds (instructions, control signals)
+//    input [3:0] ssdSel,// Select info displayed on SSD (PC, rs1, rs2, imm, etc..) //connected to pin E3
+//    output reg [15:0] LEDs,
+//    output reg [12:0] ssd
     );
     
     //Declaring all wires
@@ -160,44 +160,44 @@ module RISC_V(
                     .sel(PCSrc),
                     .out(PC_input));
           
-   //RISC-V input output
-   always @(*) begin
-       if(ledSel == 2'b00)
-           LEDs = instruction [15:0];
-       else if (ledSel == 2'b01)
-           LEDs = instruction [31:16];
-       else if (ledSel == 2'b10)
-           LEDs = {8'b00000000, ALUOp, ALU_sel, zeroFlag, PCSrc};
-       else
-           LEDs = 0;
-       end    
+//   //RISC-V input output
+//   always @(*) begin
+//       if(ledSel == 2'b00)
+//           LEDs = instruction [15:0];
+//       else if (ledSel == 2'b01)
+//           LEDs = instruction [31:16];
+//       else if (ledSel == 2'b10)
+//           LEDs = {8'b00000000, ALUOp, ALU_sel, zeroFlag, PCSrc};
+//       else
+//           LEDs = 0;
+//       end    
    
-   always @(*) begin
-       if(ssdSel == 4'b0000)
-           ssd = PC;
-       else if(ssdSel == 4'b0001)
-           ssd = PC + 1;
-       else if(ssdSel == 4'b0010)
-           ssd = branch_target;
-       else if(ssdSel == 4'b0011)
-           ssd = PC_input;
-       else if(ssdSel == 4'b0100)
-           ssd = read_data_1;
-       else if(ssdSel == 4'b0101)
-           ssd = read_data_2;
-       else if(ssdSel == 4'b0110)
-           ssd = write_data;
-       else if(ssdSel == 4'b0111)
-           ssd = ImmGen_output;
-       else if(ssdSel == 4'b1000)
-           ssd = shift_left_1_out;
-       else if(ssdSel == 4'b1001)
-           ssd = ALU_2nd_src_MUX_out;
-       else if(ssdSel == 4'b1010)
-           ssd = ALU_output;
-       else if(ssdSel == 4'b1011)
-           ssd = read_data_mem;
-   end
+//   always @(*) begin
+//       if(ssdSel == 4'b0000)
+//           ssd = PC;
+//       else if(ssdSel == 4'b0001)
+//           ssd = PC + 1;
+//       else if(ssdSel == 4'b0010)
+//           ssd = branch_target;
+//       else if(ssdSel == 4'b0011)
+//           ssd = PC_input;
+//       else if(ssdSel == 4'b0100)
+//           ssd = read_data_1;
+//       else if(ssdSel == 4'b0101)
+//           ssd = read_data_2;
+//       else if(ssdSel == 4'b0110)
+//           ssd = write_data;
+//       else if(ssdSel == 4'b0111)
+//           ssd = ImmGen_output;
+//       else if(ssdSel == 4'b1000)
+//           ssd = shift_left_1_out;
+//       else if(ssdSel == 4'b1001)
+//           ssd = ALU_2nd_src_MUX_out;
+//       else if(ssdSel == 4'b1010)
+//           ssd = ALU_output;
+//       else if(ssdSel == 4'b1011)
+//           ssd = read_data_mem;
+//   end
 
                                      
 endmodule
