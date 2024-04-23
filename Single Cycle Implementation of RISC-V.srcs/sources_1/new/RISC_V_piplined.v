@@ -216,7 +216,7 @@ module RISC_V_piplined(
                         NegativeFlag, //new
                         OverflowFlag, //new
                         ID_EX_Func[2:0],
-                        ID_EX_RegR2,
+                        ALU_register_second_input,
                         ID_EX_Rd}),
                         
                    .Q({ EX_MEM_Ctrl, 
