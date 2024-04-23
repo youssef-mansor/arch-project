@@ -38,10 +38,16 @@ module RISC_V_piplined(
     wire [31:0] ALU_first_input;
     wire [31:0] ALU_register_second_input;
         
+        
     //Register File
     wire [31:0] read_data_1;
     wire [31:0] read_data_2;
     wire [31:0] write_data;
+    
+    //hazard unit
+    wire stall;
+    wire [10:0] ctrl_signals;
+
     
     //Immediate Generator & shift lef
     wire [31:0] ImmGen_output;
@@ -65,7 +71,7 @@ module RISC_V_piplined(
            
     //Instantiating Modules
     //Instantiate Program counter
-    N_bit_register program_counter(.load(1'b1),
+    N_bit_register program_counter(.load(stall),
                                    .clk(clk),
                                    .rst(rst),
                                    .D(PC_input),
@@ -77,9 +83,24 @@ module RISC_V_piplined(
     N_bit_register #(64) IF_ID(
                               .clk(clk),
                               .rst(rst),
-                              .load(1'b1),//it should be always one
+                              .load(stall),//it should be always one
                               .D({PC, instruction}),
                               .Q({IF_ID_PC, IF_ID_Inst}));
+    // Hazard detection unit
+    HazardDetectionUnit hazard_detection_unit(
+        .IF_ID_Rs1(IF_ID_Inst[19:15]),
+        .IF_ID_Rs2(IF_ID_Inst[24:20]),
+        .ID_EX_Rd(ID_EX_Rd),
+        .ID_EX_MemRead(ID_EX_Ctrl[4]),
+        .stall(stall)
+    );
+    
+    n_bit_2_x_1_MUX #(11) ctrl_mux(
+        .a({ALUSrc, ALUOp, MemWrite,MemRead,branchOp, MemtoReg, RegWrite}),
+        .b(11'b0),
+        .s(stall),
+        .o(ctrl_signals)
+    );
     //register file
     Register_file RF(.clk(clk),
                      .rst(rst),
@@ -109,17 +130,18 @@ module RISC_V_piplined(
                                  .load(1'b1), //TODO make sure it's written each triggering edge
                                  .D({
                                  { //re-ordered to match datapath figure WB, M, EX
-                                     ALUSrc,     //EX 10
-                                     ALUOp,      //EX 9
-                                                 //EX 8
-                                                 //EX 7
-                                                 //EX 6
-                                     MemWrite,   //M  5
-                                     MemRead,    //M  4
-                                     branchOp,   //M  3
-                                                 //M  2
-                                     MemtoReg,   //WB 1
-                                     RegWrite    //WB 0
+//                                     ALUSrc,     //EX 10
+//                                     ALUOp,      //EX 9
+//                                                 //EX 8
+//                                                 //EX 7
+//                                                 //EX 6
+//                                     MemWrite,   //M  5
+//                                     MemRead,    //M  4
+//                                     branchOp,   //M  3
+//                                                 //M  2
+//                                     MemtoReg,   //WB 1
+//                                     RegWrite    //WB 0
+                                      ctrl_signals
                                      },
                                       IF_ID_PC, //32
                                       read_data_1, //32
